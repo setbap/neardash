@@ -1,6 +1,8 @@
 import {
   IDailyStackingInfo,
+  IDailyStackingVolumeInfo,
   IRawDailyStackingInfo,
+  IRawDailyStackingVolumeInfo,
 } from "lib/types/types/home";
 import moment from "moment";
 
@@ -12,22 +14,23 @@ import moment from "moment";
 //   return data;
 // };
 
-// export const getDailyStackingInfo: () => Promise<
-//   IDailyStackingInfo[]
-// > = async () => {
-//   const res = await fetch(
-//     "https://node-api.flipsidecrypto.com/api/v2/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937/data/latest"
-//   );
-//   const fetchedData: IRawDailyStackingInfo[] = await res.json();
-//   return fetchedData
-//     .sort((a, b) => (moment(a.DATE).isAfter(moment(b.DATE)) ? 1 : -1))
-//     .map((dailyInfo) => ({
-//       Count: dailyInfo.count,
-//       "Cumulative Count": dailyInfo.CUMULATIVE_COUNT,
-//       Day: dailyInfo.DATE,
-//       Name: dailyInfo.NAME,
-//     }));
-// };
+export const getDailyStackingVolumeInfo: () => Promise<
+  IDailyStackingVolumeInfo[]
+> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/4505b5f7-09d9-4d86-8b8b-8458a9870e62/data/latest"
+  );
+  const fetchedData: IRawDailyStackingVolumeInfo[] = await res.json();
+  return fetchedData
+    .sort((a, b) => (moment(a.DATE).isAfter(moment(b.DATE)) ? 1 : -1))
+    .map((dailyInfo) => ({
+      Day: dailyInfo.DATE,
+      "Staking Near": dailyInfo.STAKING_IN_NEAR,
+      "Cumlulative Staking Near": dailyInfo.CUMULATIVE_STAKING_IN_NEAR,
+      "unStaking Near": dailyInfo.UNSTAKING_IN_NEAR,
+      "Cumlulative unStaking Near": dailyInfo.CUMULATIVE_UNSTAKING_IN_NEAR,
+    }));
+};
 
 export const getDailyStackingInfo: () => Promise<any> = async () => {
   const res = await fetch(

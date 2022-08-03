@@ -11,3 +11,19 @@ export interface IDailyStackingInfo {
   Count: number;
   "Cumulative Count": number;
 }
+
+export interface IRawDailyStackingVolumeInfo {
+  DATE: string;
+  STAKING_IN_NEAR: number;
+  CUMULATIVE_STAKING_IN_NEAR: number;
+  UNSTAKING_IN_NEAR: number;
+  CUMULATIVE_UNSTAKING_IN_NEAR: number;
+}
+
+export interface IDailyStackingVolumeInfo {
+  Day: string;
+  "Staking Near": number;
+  "Cumlulative Staking Near": number;
+  "unStaking Near": number;
+  "Cumlulative unStaking Near": number;
+}

@@ -1,16 +1,18 @@
 import Home from "lib/pages/home";
-import { getDailyStackingInfo } from "lib/requests/home";
+import { getDailyStackingInfo, getDailyStackingVolumeInfo } from "lib/requests/home";
 export async function getStaticProps() {
   const [
     // static
 
     // simple
+    dailyStackingVolumeInfo,
     // seorate
     dailyStackingInfo,
   ] = await Promise.all([
     // static
 
     // simple
+    getDailyStackingVolumeInfo(), 
     // seorate
     getDailyStackingInfo(),
   ]);
@@ -19,6 +21,7 @@ export async function getStaticProps() {
       // static
 
       // simple
+      dailyStackingVolumeInfo,
       // seorate
       dailyStackingInfo,
     },

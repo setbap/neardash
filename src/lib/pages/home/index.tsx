@@ -1,13 +1,9 @@
-import BarGraph from "lib/components/charts/BarGraph";
 import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import DonutChart from "lib/components/charts/DonutChart";
-import ChartBox from "lib/components/charts/LineChart";
-import LineChartWithBar from "lib/components/charts/LineChartWithBar";
-import MultiChartBox from "lib/components/charts/MultiLineChart";
 import StackedAreaChart from "lib/components/charts/StackedAreaGraph";
 import { StatsCard } from "lib/components/charts/StateCard";
 import { StateCardRemoteData } from "lib/components/charts/StateCardRemoteData";
-import { IDailyStackingInfo } from "lib/types/types/home";
+import { IDailyStackingVolumeInfo } from "lib/types/types/home";
 
 import { NextSeo } from "next-seo";
 
@@ -28,13 +24,14 @@ const colors = [
 
 interface Props {
   // simple
-  dailyStackingInfo: any;
+  dailyStackingVolumeInfo: IDailyStackingVolumeInfo[];
   // seorate
+  dailyStackingInfo: any;
 }
 
 const Home = ({
   // static
-
+  dailyStackingVolumeInfo,
   // simple
   dailyStackingInfo,
 }: // seorate
@@ -81,9 +78,31 @@ Props) => {
 
           <StatsCard
             link="https://app.flipsidecrypto.com/velocity/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937"
-            status="inc"
+            status="dec"
             title={"Number of Unstaking TX"}
             stat={dailyStackingInfo.totalActionCount.unstaking}
+          />
+
+          <StatsCard
+            link="https://app.flipsidecrypto.com/velocity/queries/4505b5f7-09d9-4d86-8b8b-8458a9870e62"
+            status="inc"
+            title={"Amount of Staked Near"}
+            stat={
+              dailyStackingVolumeInfo[dailyStackingVolumeInfo.length - 1][
+                "Cumlulative Staking Near"
+              ]
+            }
+          />
+
+          <StatsCard
+            link="https://app.flipsidecrypto.com/velocity/queries/4505b5f7-09d9-4d86-8b8b-8458a9870e62"
+            status="dec"
+            title={"Amount of unStaked Near"}
+            stat={
+              dailyStackingVolumeInfo[dailyStackingVolumeInfo.length - 1][
+                "Cumlulative unStaking Near"
+              ]
+            }
           />
 
           {/* <StatsCard
@@ -179,11 +198,76 @@ Props) => {
                 Action: "unStaking",
               },
             ]}
-            tooltipTitle="Number of Stake and UnStake Transaction"
-            modelInfo="Number of Stake and UnStake Transaction"
-            title="Number of Stake and UnStake Transaction"
+            tooltipTitle=""
+            modelInfo=""
+            title="Staked vs unStaked TX Count"
             dataKey="Count"
             nameKey="Action"
+          />
+          <DonutChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/4505b5f7-09d9-4d86-8b8b-8458a9870e62"
+            data={[
+              {
+                Count:
+                  dailyStackingVolumeInfo[dailyStackingVolumeInfo.length - 1][
+                    "Cumlulative Staking Near"
+                  ],
+                Action: "Staking",
+              },
+              {
+                Count:
+                  dailyStackingVolumeInfo[dailyStackingVolumeInfo.length - 1][
+                    "Cumlulative unStaking Near"
+                  ],
+                Action: "unStaking",
+              },
+            ]}
+            tooltipTitle=""
+            modelInfo=""
+            title="Staked vs unStaked Volume(NEAR)"
+            dataKey="Count"
+            nameKey="Action"
+          />
+
+          <StackedAreaChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/4505b5f7-09d9-4d86-8b8b-8458a9870e62"
+            modelInfo="number of address make tx in Near"
+            values={dailyStackingVolumeInfo}
+            title="Daily Staking and unStaking Near Volume"
+            dataKey="Day"
+            baseSpan={3}
+            oyLabel="Amount($NEAR)"
+            oxLabel="name"
+            labels={[
+              {
+                color: colors[1],
+                key: "Staking Near",
+              },
+              {
+                color: colors[0],
+                key: "unStaking Near",
+              },
+            ]}
+          />
+          <StackedAreaChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/4505b5f7-09d9-4d86-8b8b-8458a9870e62"
+            modelInfo=""
+            values={dailyStackingVolumeInfo}
+            title="Cumulative Volume Stake and unStake Near"
+            dataKey="Day"
+            baseSpan={3}
+            oyLabel="Amount($NEAR)"
+            oxLabel="name"
+            labels={[
+              {
+                color: colors[1],
+                key: "Cumlulative Staking Near",
+              },
+              {
+                color: colors[0],
+                key: "Cumlulative unStaking Near",
+              },
+            ]}
           />
         </SimpleGrid>
       </Box>

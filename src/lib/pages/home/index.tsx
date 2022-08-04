@@ -1,9 +1,14 @@
 import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import BarGraph from "lib/components/charts/BarGraph";
 import DonutChart from "lib/components/charts/DonutChart";
 import StackedAreaChart from "lib/components/charts/StackedAreaGraph";
 import { StatsCard } from "lib/components/charts/StateCard";
 import { StateCardRemoteData } from "lib/components/charts/StateCardRemoteData";
-import { IDailyStackingVolumeInfo } from "lib/types/types/home";
+import {
+  IDailyStackingVolumeInfo,
+  IValidatorPower,
+  IValidatorWithMostInteraction,
+} from "lib/types/types/home";
 
 import { NextSeo } from "next-seo";
 
@@ -24,16 +29,22 @@ const colors = [
 
 interface Props {
   // simple
+  validatorWithMostInteraction: IValidatorWithMostInteraction[];
+  validatorPowerInfo: IValidatorPower[];
   dailyStackingVolumeInfo: IDailyStackingVolumeInfo[];
   // seorate
   dailyStackingInfo: any;
+  dailyUniqueStackerInfo: any;
 }
 
 const Home = ({
   // static
+  validatorWithMostInteraction,
+  validatorPowerInfo,
   dailyStackingVolumeInfo,
   // simple
   dailyStackingInfo,
+  dailyUniqueStackerInfo,
 }: // seorate
 Props) => {
   const bgCard = useColorModeValue("white", "#191919");
@@ -105,6 +116,50 @@ Props) => {
             }
           />
 
+          <StatsCard
+            link="https://app.flipsidecrypto.com/velocity/queries/2d7631b4-6846-46a6-9b63-cbe60562eab9"
+            status="inc"
+            title={"Number User of doing Staking TX"}
+            stat={dailyUniqueStackerInfo.totalActionCount.staking}
+          />
+
+          <StatsCard
+            link="https://app.flipsidecrypto.com/velocity/queries/2d7631b4-6846-46a6-9b63-cbe60562eab9"
+            status="dec"
+            title={"Number User of doing unStaking TX"}
+            stat={dailyUniqueStackerInfo.totalActionCount.unstaking}
+          />
+
+          <StateCardRemoteData
+            url="https://node-api.flipsidecrypto.com/api/v2/queries/9e67ab55-f965-4bcd-a33d-d5c1668b51a1/data/latest"
+            link="https://app.flipsidecrypto.com/velocity/queries/9e67ab55-f965-4bcd-a33d-d5c1668b51a1"
+            status="inc"
+            title={"Number of Staked Validator"}
+            getStat={(data) => data[0].STAKE_VALIDATOR}
+          />
+
+          <StateCardRemoteData
+            url="https://node-api.flipsidecrypto.com/api/v2/queries/9ed7d532-7280-4492-9848-88ef766b3f5b/data/latest"
+            link="https://app.flipsidecrypto.com/velocity/queries/9ed7d532-7280-4492-9848-88ef766b3f5b"
+            status="dec"
+            title={"Number of unStaked Validator"}
+            getStat={(data) => data[0].UNSTAKE_VALIDATOR}
+          />
+          <StateCardRemoteData
+            url="https://node-api.flipsidecrypto.com/api/v2/queries/9e67ab55-f965-4bcd-a33d-d5c1668b51a1/data/latest"
+            link="https://app.flipsidecrypto.com/velocity/queries/9e67ab55-f965-4bcd-a33d-d5c1668b51a1"
+            status="inc"
+            title={"Average Amount Near Staked in TXs"}
+            getStat={(data) => data[0].AVG_NEAR_STAKE}
+          />
+          <StateCardRemoteData
+            url="https://node-api.flipsidecrypto.com/api/v2/queries/9ed7d532-7280-4492-9848-88ef766b3f5b/data/latest"
+            link="https://app.flipsidecrypto.com/velocity/queries/9ed7d532-7280-4492-9848-88ef766b3f5b"
+            status="dec"
+            title={"Average Amount Near unStaked in TXs"}
+            getStat={(data) => data[0].AVG_NEAR_UNSTAKE}
+          />
+
           {/* <StatsCard
             link="https://app.flipsidecrypto.com/velocity/queries/b7ecf5c5-87b8-4d5d-a7fb-8a04702c90a8"
             status="inc"
@@ -120,17 +175,59 @@ Props) => {
           columns={{ sm: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 1, md: 2, lg: 4 }}
         >
-          {/* <ChartBox
-            customColor="#8247e5"
-            data={dailyStackingInfo}
+          <BarGraph
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/eeff7566-ea73-4115-b1d4-cf9a29adab5f"
+            extraInfoToTooltip=""
+            modelInfo=""
+            values={validatorWithMostInteraction.sort(
+              (a, b) => b["Interaction Count"] - a["Interaction Count"]
+            )}
+            title="Distribution Interaction(stake and unstake) of Near Validators"
+            dataKey="Validator"
+            oyLabel="Number of Interaction"
+            oxLabel="name"
+            isNotDate
+            baseSpan={2}
+            labels={[{ key: "Interaction Count", color: colors[2] }]}
+          />
+          <DonutChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/eeff7566-ea73-4115-b1d4-cf9a29adab5f"
+            data={validatorWithMostInteraction
+              .sort((a, b) => b["Interaction Count"] - a["Interaction Count"])
+              .slice(0, 10)}
+            tooltipTitle=""
+            modelInfo=""
+            title="Top 10 Validator with most Interaction"
+            dataKey="Interaction Count"
+            nameKey="Validator"
+          />
+
+          <BarGraph
+            queryLink="https://fcd.terra.dev/v1/staking/validators"
+            extraInfoToTooltip=""
+            modelInfo=""
+            values={validatorPowerInfo
+              .sort((a, b) => b.Power - a.Power)
+              .filter((item) => item.Power > 0)}
+            title="Distribution of Power of Near Validators"
+            dataKey="Validator"
+            oyLabel="Power of Validator"
+            oxLabel="name"
+            isNotDate
+            baseSpan={2}
+            labels={[{ key: "Power", color: colors[2] }]}
+          />
+          <DonutChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937"
-            tooltipTitle="Number of Holders"
-            modelInfo="Number of Holders"
-            title="Number of Holders"
-            baseSpan={3}
-            areaDataKey="Holders Count"
-            xAxisDataKey="Day"
-          /> */}
+            data={validatorPowerInfo
+              .sort((a, b) => b["Amount NEAR"] - a["Amount NEAR"])
+              .slice(0, 10)}
+            tooltipTitle=""
+            modelInfo=""
+            title="Top 10 Validator with most NEAR Staked"
+            dataKey="Amount NEAR"
+            nameKey="Validator"
+          />
 
           {/* <LineChartWithBar
             customColor="#8247e5"
@@ -145,47 +242,6 @@ Props) => {
             lineDataKey="Matic Price"
             xAxisDataKey="Day"
           /> */}
-
-          <StackedAreaChart
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937"
-            modelInfo="number of address make tx in Near"
-            values={dailyStackingInfo.dailyStackActionsCount}
-            title="Daily Staking and unStaking Transaction Count"
-            dataKey="date"
-            baseSpan={3}
-            oyLabel="Number Transaction"
-            oxLabel="name"
-            labels={[
-              {
-                color: colors[1],
-                key: "staking",
-              },
-              {
-                color: colors[0],
-                key: "unstaking",
-              },
-            ]}
-          />
-          <StackedAreaChart
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937"
-            modelInfo="number of address make tx in Near"
-            values={dailyStackingInfo.dailyStackActionsComulativeCount}
-            title="Daily Staking and unStaking Transaction Count"
-            dataKey="date"
-            baseSpan={3}
-            oyLabel="Number Transaction"
-            oxLabel="name"
-            labels={[
-              {
-                color: colors[1],
-                key: "staking",
-              },
-              {
-                color: colors[0],
-                key: "unstaking",
-              },
-            ]}
-          />
           <DonutChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937"
             data={[
@@ -228,6 +284,65 @@ Props) => {
             dataKey="Count"
             nameKey="Action"
           />
+          <DonutChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/2d7631b4-6846-46a6-9b63-cbe60562eab9"
+            data={[
+              {
+                Count: dailyUniqueStackerInfo.totalActionCount.staking,
+                Action: "Staking",
+              },
+              {
+                Count: dailyUniqueStackerInfo.totalActionCount.unstaking,
+                Action: "unStaking",
+              },
+            ]}
+            tooltipTitle=""
+            modelInfo=""
+            title="Staked vs unStaked Unique Users"
+            dataKey="Count"
+            nameKey="Action"
+          />
+
+          <StackedAreaChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937"
+            modelInfo="number of address make tx in Near"
+            values={dailyStackingInfo.dailyStackActionsCount}
+            title="Daily Staking and unStaking Transaction Count"
+            dataKey="date"
+            baseSpan={3}
+            oyLabel="Number Transaction"
+            oxLabel="name"
+            labels={[
+              {
+                color: colors[1],
+                key: "staking",
+              },
+              {
+                color: colors[0],
+                key: "unstaking",
+              },
+            ]}
+          />
+          <StackedAreaChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937"
+            modelInfo="number of address make tx in Near"
+            values={dailyStackingInfo.dailyStackActionsComulativeCount}
+            title="Daily Cumulative Staking and unStaking Transaction Count"
+            dataKey="date"
+            baseSpan={3}
+            oyLabel="Number Transaction"
+            oxLabel="name"
+            labels={[
+              {
+                color: colors[1],
+                key: "staking",
+              },
+              {
+                color: colors[0],
+                key: "unstaking",
+              },
+            ]}
+          />
 
           <StackedAreaChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/4505b5f7-09d9-4d86-8b8b-8458a9870e62"
@@ -266,6 +381,46 @@ Props) => {
               {
                 color: colors[0],
                 key: "Cumlulative unStaking Near",
+              },
+            ]}
+          />
+          <StackedAreaChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/2d7631b4-6846-46a6-9b63-cbe60562eab9"
+            modelInfo="number of address make tx in Near"
+            values={dailyUniqueStackerInfo.dailyStackActionsUsers}
+            title="Daily Staking and unStaking Unique User"
+            dataKey="date"
+            baseSpan={3}
+            oyLabel="Number Users"
+            oxLabel="name"
+            labels={[
+              {
+                color: colors[1],
+                key: "staking",
+              },
+              {
+                color: colors[0],
+                key: "unstaking",
+              },
+            ]}
+          />
+          <StackedAreaChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/2d7631b4-6846-46a6-9b63-cbe60562eab9"
+            modelInfo="number of address make tx in Near"
+            values={dailyUniqueStackerInfo.dailyStackActionsComulativeUsers}
+            title="Daily Staking and unStaking Cumulative Unique User"
+            dataKey="date"
+            baseSpan={3}
+            oyLabel="Number Users"
+            oxLabel="name"
+            labels={[
+              {
+                color: colors[1],
+                key: "staking",
+              },
+              {
+                color: colors[0],
+                key: "unstaking",
               },
             ]}
           />

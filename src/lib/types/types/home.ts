@@ -27,3 +27,32 @@ export interface IDailyStackingVolumeInfo {
   "unStaking Near": number;
   "Cumlulative unStaking Near": number;
 }
+
+export interface IRawDailyUniqueStakersInfo {
+  DATE: string;
+  NAME: string;
+  UNIQUE_USERS: number;
+  CUMULATIVE_UNIQUE_USERS: number;
+}
+
+export interface IRawValidatorPower {
+  TX_RECEIVER: string;
+  POWER_COUNT: number;
+  POWER_AMOUNT_IN_NEAR: number;
+}
+
+export interface IValidatorPower {
+  Validator: string;
+  Power: number;
+  "Amount NEAR": number;
+}
+
+export interface IRawValidatorWithMostInteraction {
+  TX_RECEIVER: string;
+  count: number;
+}
+
+export interface IValidatorWithMostInteraction {
+  Validator: string;
+  "Interaction Count": number;
+}

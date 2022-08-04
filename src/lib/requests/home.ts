@@ -3,6 +3,11 @@ import {
   IDailyStackingVolumeInfo,
   IRawDailyStackingInfo,
   IRawDailyStackingVolumeInfo,
+  IRawDailyUniqueStakersInfo,
+  IRawValidatorPower,
+  IRawValidatorWithMostInteraction,
+  IValidatorPower,
+  IValidatorWithMostInteraction,
 } from "lib/types/types/home";
 import moment from "moment";
 
@@ -13,6 +18,39 @@ import moment from "moment";
 //   const data: IRawTotalTokenInfo = (await res.json())[0];
 //   return data;
 // };
+
+export const getValidatorWithMostInteraction: () => Promise<
+  IValidatorWithMostInteraction[]
+> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/eeff7566-ea73-4115-b1d4-cf9a29adab5f/data/latest"
+  );
+  const fetchedData: IRawValidatorWithMostInteraction[] = await res.json();
+  return fetchedData
+    .sort((a, b) => b.count - a.count)
+    .map((dailyInfo) => ({
+      "Interaction Count": dailyInfo.count,
+      Validator: dailyInfo.TX_RECEIVER,
+    }));
+};
+
+export const getValidatorPowerInfo: () => Promise<
+  IValidatorPower[]
+> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/fe3320f4-051a-4cd9-b946-77112fc882b6/data/latest"
+  );
+  const fetchedData: IRawValidatorPower[] = await res.json();
+  return fetchedData
+    .sort((a, b) =>
+      moment(a.POWER_COUNT).isAfter(moment(b.POWER_COUNT)) ? 1 : -1
+    )
+    .map((dailyInfo) => ({
+      Validator: dailyInfo.TX_RECEIVER,
+      Power: dailyInfo.POWER_COUNT,
+      "Amount NEAR": dailyInfo.POWER_AMOUNT_IN_NEAR,
+    }));
+};
 
 export const getDailyStackingVolumeInfo: () => Promise<
   IDailyStackingVolumeInfo[]
@@ -70,6 +108,50 @@ export const getDailyStackingInfo: () => Promise<any> = async () => {
     totalActionCount:
       dailyStackActionsComulativeCount[
         dailyStackActionsComulativeCount.length - 1
+      ],
+    actions: actionName,
+  };
+};
+
+export const getDailyUniqueStackerInfo: () => Promise<any> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/2d7631b4-6846-46a6-9b63-cbe60562eab9/data/latest"
+  );
+  const rawData: IRawDailyUniqueStakersInfo[] = await res.json();
+  const actionName = Array.from(
+    new Set(
+      rawData.map((item) => {
+        return item["NAME"];
+      })
+    )
+  );
+
+  const dailyStackActionsUsers = calculateDailyBridgeValue(
+    "MM/DD/YYYY",
+    rawData,
+    "DATE",
+    "NAME",
+    "UNIQUE_USERS",
+    actionName,
+    0
+  );
+
+  const dailyStackActionsComulativeUsers = calculateDailyBridgeValue(
+    "MM/DD/YYYY",
+    rawData,
+    "DATE",
+    "NAME",
+    "CUMULATIVE_UNIQUE_USERS",
+    actionName,
+    0
+  );
+
+  return {
+    dailyStackActionsUsers,
+    dailyStackActionsComulativeUsers,
+    totalActionCount:
+      dailyStackActionsComulativeUsers[
+        dailyStackActionsComulativeUsers.length - 1
       ],
     actions: actionName,
   };

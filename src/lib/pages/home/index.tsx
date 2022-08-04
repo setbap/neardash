@@ -35,6 +35,7 @@ interface Props {
   // seorate
   dailyStackingInfo: any;
   dailyUniqueStackerInfo: any;
+  metaAndBinanceNodeInfo: any;
 }
 
 const Home = ({
@@ -45,6 +46,7 @@ const Home = ({
   // simple
   dailyStackingInfo,
   dailyUniqueStackerInfo,
+  metaAndBinanceNodeInfo,
 }: // seorate
 Props) => {
   const bgCard = useColorModeValue("white", "#191919");
@@ -421,6 +423,48 @@ Props) => {
               {
                 color: colors[0],
                 key: "unstaking",
+              },
+            ]}
+          />
+
+          <BarGraph
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/75f10f69-b345-4d65-9b0a-91cce02cbe0e"
+            extraInfoToTooltip=""
+            modelInfo=""
+            values={metaAndBinanceNodeInfo.dailyPowerAmount}
+            title="meta-pool and astro-stakers.poolv1 activity"
+            dataKey="date"
+            oyLabel="$Near"
+            oxLabel="Day"
+            baseSpan={3}
+            labels={[
+              {
+                color: colors[1],
+                key: "binancenode1.poolv1.near",
+              },
+              {
+                color: colors[0],
+                key: "meta-pool.near",
+              },
+            ]}
+          />
+          <StackedAreaChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/75f10f69-b345-4d65-9b0a-91cce02cbe0e"
+            modelInfo=""
+            values={metaAndBinanceNodeInfo.cumulativePowerAmount}
+            title="Comparison meta-pool and astro-stakers.poolv1 activity"
+            dataKey="date"
+            baseSpan={3}
+            oyLabel="$Near"
+            oxLabel="Day"
+            labels={[
+              {
+                color: colors[2],
+                key: "binancenode1.poolv1.near",
+              },
+              {
+                color: colors[8],
+                key: "meta-pool.near",
               },
             ]}
           />

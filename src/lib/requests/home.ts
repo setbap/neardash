@@ -4,6 +4,7 @@ import {
   IRawDailyStackingInfo,
   IRawDailyStackingVolumeInfo,
   IRawDailyUniqueStakersInfo,
+  IRawMetaPoolAndBinanceNode,
   IRawValidatorPower,
   IRawValidatorWithMostInteraction,
   IValidatorPower,
@@ -153,6 +154,47 @@ export const getDailyUniqueStackerInfo: () => Promise<any> = async () => {
       dailyStackActionsComulativeUsers[
         dailyStackActionsComulativeUsers.length - 1
       ],
+    actions: actionName,
+  };
+};
+
+export const getMetaAndBinanceNodeInfo: () => Promise<any> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/75f10f69-b345-4d65-9b0a-91cce02cbe0e/data/latest"
+  );
+  const rawData: IRawMetaPoolAndBinanceNode[] = await res.json();
+  const actionName = Array.from(
+    new Set(
+      rawData.map((item) => {
+        return item["TX_RECEIVER"];
+      })
+    )
+  );
+
+  const dailyPowerAmount = calculateDailyBridgeValue(
+    "MM/DD/YYYY",
+    rawData,
+    "DATE",
+    "TX_RECEIVER",
+    "POWER_AMOUNT_IN_NEAR",
+    actionName,
+    0
+  );
+
+  const cumulativePowerAmount = calculateDailyBridgeValue(
+    "MM/DD/YYYY",
+    rawData,
+    "DATE",
+    "TX_RECEIVER",
+    "CUMULATIVE_POWER_AMOUNT_IN_NEAR",
+    actionName,
+    0
+  );
+
+  return {
+    dailyPowerAmount,
+    cumulativePowerAmount,
+    totalActionCount: cumulativePowerAmount[cumulativePowerAmount.length - 1],
     actions: actionName,
   };
 };

@@ -3,6 +3,7 @@ import {
   getDailyStackingInfo,
   getDailyStackingVolumeInfo,
   getDailyUniqueStackerInfo,
+  getMetaAndBinanceNodeInfo,
   getValidatorPowerInfo,
   getValidatorWithMostInteraction,
 } from "lib/requests/home";
@@ -17,6 +18,7 @@ export async function getStaticProps() {
     // seorate
     dailyStackingInfo,
     dailyUniqueStackerInfo,
+    metaAndBinanceNodeInfo,
   ] = await Promise.all([
     // static
 
@@ -27,6 +29,7 @@ export async function getStaticProps() {
     // seorate
     getDailyStackingInfo(),
     getDailyUniqueStackerInfo(),
+    getMetaAndBinanceNodeInfo(),
   ]);
   return {
     props: {
@@ -39,6 +42,7 @@ export async function getStaticProps() {
       // seorate
       dailyStackingInfo,
       dailyUniqueStackerInfo,
+      metaAndBinanceNodeInfo,
     },
     revalidate: 10 * 60,
   };

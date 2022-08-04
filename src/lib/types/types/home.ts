@@ -56,3 +56,11 @@ export interface IValidatorWithMostInteraction {
   Validator: string;
   "Interaction Count": number;
 }
+
+export interface IRawMetaPoolAndBinanceNode {
+  DATE: string;
+  TX_RECEIVER: string;
+  POWER_COUNT: number;
+  POWER_AMOUNT_IN_NEAR: number;
+  CUMULATIVE_POWER_AMOUNT_IN_NEAR: number;
+}

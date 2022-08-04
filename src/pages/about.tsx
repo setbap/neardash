@@ -21,7 +21,7 @@ const About = () => {
 
 ## About
 
-This dashboard is made with love by members of the Ethereum community, in partnership with Flipside Crypto. We hope it serves as a valuable window into high-level metrics that display the vitality and growth of the Polygon.
+This dashboard is made with love by members of the Near community, in partnership with Flipside Crypto. We hope it serves as a valuable window into high-level metrics that display the vitality and growth of the Near Ecosystem.
 
   
 
@@ -29,11 +29,11 @@ This dashboard is made with love by members of the Ethereum community, in partne
   
 ### Methodology
 
--   Data is drawn from a combination of Flipside Crypto’s Ethereum tables and existing APIs.
+-   Data is drawn from a combination of Flipside Crypto’s Near tables and existing APIs.
     
 -   For charts where data comes from Flipside’s data, a link to the underlying query is provided in the Settings gear wheel at the top right of each visualization.
     
--   By default, charts are set to refresh hourly
+
     
     
   

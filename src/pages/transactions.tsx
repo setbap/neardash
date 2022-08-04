@@ -104,8 +104,8 @@ function Transactions() {
           {mutation.isIdle && (
             <TxItemContainer>
               <Text textAlign={"center"} fontSize={["md", "xl"]}>
-                Enter an ETH address and click the search button to get All
-                Polygon Transaction History From FlipSide Crypto
+                Enter an ETH address and click the search button to get All Near
+                Transaction History From FlipSide Crypto
               </Text>
             </TxItemContainer>
           )}
@@ -123,7 +123,7 @@ function Transactions() {
             !mutation.data.records?.length && (
               <TxItemContainer>
                 <Text textAlign={"center"} fontSize={["md", "xl"]}>
-                  We Don't Find Any Polygon Transaction From This Address.
+                  We Don't Find Any Near Transaction From This Address.
                 </Text>
               </TxItemContainer>
             )}

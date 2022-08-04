@@ -1,24 +1,24 @@
 /** @type {import('next-seo').DefaultSeoProps} */
 const defaultSEOConfig = {
-  title: "PolygonDash",
-  titleTemplate: "%s | Business Intelligence Dashboard for Polygon",
+  title: "NearDash",
+  titleTemplate: "%s | Business Intelligence Dashboard for Near",
   defaultTitle:
-    "PolygonDash | Business Intelligence Dashboard for Polygon ",
+    "NearDash | Business Intelligence Dashboard for Near ",
   description:
-    "Best Business Intelligence Dashboard for Polygon by Flipside Crypto and Setbap ",
-  canonical: "https://PolygonDash.vercel.app/",
+    "Best Business Intelligence Dashboard for Near by Flipside Crypto and Setbap ",
+  canonical: "https://NearDash.vercel.app/",
   openGraph: {
-    url: "https://PolygonDash.vercel.app/",
-    title: "PolygonDash",
+    url: "https://NearDash.vercel.app/",
+    title: "NearDash",
     description:
-      "Best Business Intelligence Dashboard for Polygon by Flipside Crypto and Setbap ",
+      "Best Business Intelligence Dashboard for Near by Flipside Crypto and Setbap ",
     images: [
       {
-        url: "https://og-image.sznm.dev/**PolygonDash**.vercel.app.png?theme=dark&md=1&fontSize=125px",
-        alt: "PolygonDash by Flipside Crypto and Setbap",
+        url: "https://og-image.sznm.dev/**NearDash**.vercel.app.png?theme=dark&md=1&fontSize=125px",
+        alt: "NearDash by Flipside Crypto and Setbap",
       },
     ],
-    site_name: "PolygonDash",
+    site_name: "NearDash",
   },
   twitter: {
     handle: "@flipsidecrypto",

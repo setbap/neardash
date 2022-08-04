@@ -205,7 +205,7 @@ Props) => {
           />
 
           <BarGraph
-            queryLink="https://fcd.terra.dev/v1/staking/validators"
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/fe3320f4-051a-4cd9-b946-77112fc882b6"
             extraInfoToTooltip=""
             modelInfo=""
             values={validatorPowerInfo
@@ -220,7 +220,7 @@ Props) => {
             labels={[{ key: "Power", color: colors[2] }]}
           />
           <DonutChart
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937"
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/fe3320f4-051a-4cd9-b946-77112fc882b6"
             data={validatorPowerInfo
               .sort((a, b) => b["Amount NEAR"] - a["Amount NEAR"])
               .slice(0, 10)}

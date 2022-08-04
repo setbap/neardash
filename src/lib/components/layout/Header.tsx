@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <Flex as="header" width="full" align="center">
       <Heading as="h1" size="md">
-        <Link href="/">PolygonDash</Link>
+        <Link href="/">NearDash</Link>
       </Heading>
 
       <Box marginLeft="auto">{/* <ThemeToggle /> */}</Box>

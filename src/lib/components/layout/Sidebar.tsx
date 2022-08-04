@@ -237,7 +237,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               fontSize="2xl"
               fontWeight={"extrabold"}
             >
-              PolygonDash
+              NearDash
             </Box>
           </>
         </NextLink>

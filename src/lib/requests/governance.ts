@@ -9,7 +9,7 @@ import {
   IRawValidatorWithMostInteraction,
   IValidatorPower,
   IValidatorWithMostInteraction,
-} from "lib/types/types/home";
+} from "lib/types/types/governance";
 import moment from "moment";
 
 // export const getTotalTokenInfo = async (): Promise<IRawTotalTokenInfo> => {

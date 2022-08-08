@@ -1,4 +1,4 @@
-import Home from "lib/pages/home";
+import Governance from "lib/pages/governance";
 import {
   getDailyStackingInfo,
   getDailyStackingVolumeInfo,
@@ -6,7 +6,7 @@ import {
   getMetaAndBinanceNodeInfo,
   getValidatorPowerInfo,
   getValidatorWithMostInteraction,
-} from "lib/requests/home";
+} from "lib/requests/governance";
 export async function getStaticProps() {
   const [
     // static
@@ -47,4 +47,4 @@ export async function getStaticProps() {
     revalidate: 10 * 60,
   };
 }
-export default Home;
+export default Governance;

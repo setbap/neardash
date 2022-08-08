@@ -8,7 +8,7 @@ import {
   IDailyStackingVolumeInfo,
   IValidatorPower,
   IValidatorWithMostInteraction,
-} from "lib/types/types/home";
+} from "lib/types/types/governance";
 
 import { NextSeo } from "next-seo";
 
@@ -38,7 +38,7 @@ interface Props {
   metaAndBinanceNodeInfo: any;
 }
 
-const Home = ({
+const Governance = ({
   // static
   validatorWithMostInteraction,
   validatorPowerInfo,
@@ -474,4 +474,4 @@ Props) => {
   );
 };
 
-export default Home;
+export default Governance;

@@ -31,6 +31,7 @@ import LinkToSourceMenuItem from "../basic/LinkToSourceMenuItem";
 interface Props {
   modelInfo: string;
   xAxisDataKey: string;
+  showSeprate?: boolean;
   lineDataKey: string;
   barDataKey: string;
   title: string;
@@ -53,6 +54,7 @@ const LineChartWithBar = ({
   baseSpan = 1,
   defultDateView = "day",
   queryLink,
+  showSeprate = false,
   barColor,
   isNotDate = false,
   extraDecimal = 2,
@@ -278,18 +280,20 @@ const LineChartWithBar = ({
               fontSize="12"
               tickSize={8}
             />
-            <YAxis
-              tickFormatter={(value) =>
-                millify(value, {
-                  precision: extraDecimal,
-                  decimalSeparator: ".",
-                })
-              }
-              width={80}
-              yAxisId="right"
-              orientation="right"
-              tick={{ fontSize: 10 }}
-            ></YAxis>
+            {showSeprate && (
+              <YAxis
+                tickFormatter={(value) =>
+                  millify(value, {
+                    precision: extraDecimal,
+                    decimalSeparator: ".",
+                  })
+                }
+                width={80}
+                yAxisId="right"
+                orientation="right"
+                tick={{ fontSize: 10 }}
+              ></YAxis>
+            )}
             <Tooltip
               labelFormatter={(value: string) => {
                 if (isNotDate || defultViewSetting === "month") {
@@ -308,7 +312,11 @@ const LineChartWithBar = ({
                 });
               }}
             />
-            <Bar yAxisId="right" dataKey={barDataKey} fill={barColor} />
+            <Bar
+              yAxisId={showSeprate ? "right" : "left"}
+              dataKey={barDataKey}
+              fill={barColor}
+            />
 
             <Area
               dataKey={lineDataKey}

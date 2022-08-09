@@ -36,7 +36,7 @@ interface LinkItemProps {
   path: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", path: "/`", icon: FiHome },
+  { name: "Home", path: "/", icon: FiHome },
   { name: "Governance", path: "/governance", icon: FiHome },
   // { name: "TX History", path: "/transactions", icon: AiOutlineInfoCircle },
   { name: "About", path: "/about", icon: AiOutlineInfoCircle },

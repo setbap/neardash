@@ -1,7 +1,11 @@
 import {
+  IDailyBlockAge,
   IDailyNewWallet,
   IDailySuccessAndFailedRate,
+  IDailyTPB,
+  IDailyTPS,
   ITop100UsedContracts,
+  ITotalPerformanceInfo,
 } from "lib/types/types/home";
 import moment from "moment";
 
@@ -12,6 +16,15 @@ export const getTodayNewWallet = async (): Promise<number> => {
   const data: { "Current New Wallets": number } = (await res.json())[0];
   return data["Current New Wallets"];
 };
+
+export const getTotalPerformanceInfo =
+  async (): Promise<ITotalPerformanceInfo> => {
+    const res = await fetch(
+      "https://node-api.flipsidecrypto.com/api/v2/queries/72629900-1d61-4094-8a4c-a83db0c32f40/data/latest"
+    );
+    const data: ITotalPerformanceInfo = (await res.json())[0];
+    return data;
+  };
 
 export const getDailyNewWallet: () => Promise<IDailyNewWallet[]> = async () => {
   const res = await fetch(
@@ -42,4 +55,28 @@ export const getTop100UsedContracts: () => Promise<
   );
   const fetchedData: ITop100UsedContracts[] = await res.json();
   return fetchedData.sort((a, b) => (a.Counts > b.Counts ? 1 : -1));
+};
+
+export const getDailyBlockAge: () => Promise<IDailyBlockAge[]> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/2691bf2a-25a6-4b8f-839f-804b82405b03/data/latest"
+  );
+  const fetchedData: IDailyBlockAge[] = await res.json();
+  return fetchedData.sort((a, b) => (a.Day > b.Day ? 1 : -1));
+};
+
+export const getTPS: () => Promise<IDailyTPS[]> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/118ed14d-9a10-4b4d-a8ab-7ff2255c9ddf/data/latest"
+  );
+  const fetchedData: IDailyTPS[] = await res.json();
+  return fetchedData.sort((a, b) => (a.Day > b.Day ? 1 : -1));
+};
+
+export const getTPB: () => Promise<IDailyTPB[]> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/8bd1b806-58db-41a8-91b2-db4999189bb1/data/latest"
+  );
+  const fetchedData: IDailyTPB[] = await res.json();
+  return fetchedData.sort((a, b) => (a.Day > b.Day ? 1 : -1));
 };

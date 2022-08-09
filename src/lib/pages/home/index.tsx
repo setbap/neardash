@@ -3,9 +3,13 @@ import BarGraph from "lib/components/charts/BarGraph";
 import LineChartWithBar from "lib/components/charts/LineChartWithBar";
 import { StatsCard } from "lib/components/charts/StateCard";
 import {
+  IDailyBlockAge,
   IDailyNewWallet,
   IDailySuccessAndFailedRate,
+  IDailyTPB,
+  IDailyTPS,
   ITop100UsedContracts,
+  ITotalPerformanceInfo,
 } from "lib/types/types/home";
 
 import { NextSeo } from "next-seo";
@@ -32,13 +36,22 @@ interface Props {
   dailyNewWallet: IDailyNewWallet[];
   dailySuccessAndFailedRate: IDailySuccessAndFailedRate[];
   top100UsedContracts: ITop100UsedContracts[];
+  dailyBlockAgeInfo: IDailyBlockAge[];
+  tPSInfo: IDailyTPS[];
+  tPBInfo: IDailyTPB[];
+  // not impelemented yet
+  totalPerformanceInfo: ITotalPerformanceInfo;
 }
 
 const Governance = ({
   dailyNewWallet,
+  totalPerformanceInfo,
   todayNewWallet,
   dailySuccessAndFailedRate,
   top100UsedContracts,
+  dailyBlockAgeInfo,
+  tPSInfo,
+  tPBInfo,
 }: Props): JSX.Element => {
   return (
     <>
@@ -69,6 +82,49 @@ const Governance = ({
             status="inc"
             link="https://app.flipsidecrypto.com/velocity/queries/c2f68189-0f79-4b9b-a41a-ae642c53921c"
           />
+          {/* === */}
+          <StatsCard
+            stat={totalPerformanceInfo["Min Block Time"]}
+            title="Min Block Time (sec)"
+            status="inc"
+            link="https://app.flipsidecrypto.com/velocity/queries/72629900-1d61-4094-8a4c-a83db0c32f40"
+          />
+
+          <StatsCard
+            stat={totalPerformanceInfo["Average Block Time"]}
+            title="Average Block Time (sec)"
+            status="unchanged"
+            link="https://app.flipsidecrypto.com/velocity/queries/72629900-1d61-4094-8a4c-a83db0c32f40"
+          />
+
+          <StatsCard
+            stat={totalPerformanceInfo["Max Block Time"]}
+            title="Max Block Time (sec)"
+            status="dec"
+            link="https://app.flipsidecrypto.com/velocity/queries/72629900-1d61-4094-8a4c-a83db0c32f40"
+          />
+
+          <StatsCard
+            stat={totalPerformanceInfo["Min TX count per block"]}
+            title="Min TX count per block"
+            status="inc"
+            link="https://app.flipsidecrypto.com/velocity/queries/72629900-1d61-4094-8a4c-a83db0c32f40"
+          />
+
+          <StatsCard
+            stat={totalPerformanceInfo["Average TX count per block"]}
+            title="Average TX count per block"
+            status="unchanged"
+            link="https://app.flipsidecrypto.com/velocity/queries/72629900-1d61-4094-8a4c-a83db0c32f40"
+          />
+
+          <StatsCard
+            stat={totalPerformanceInfo["Max TX count per block"]}
+            title="Max TX count per block"
+            status="dec"
+            link="https://app.flipsidecrypto.com/velocity/queries/72629900-1d61-4094-8a4c-a83db0c32f40"
+          />
+          {/* === */}
         </SimpleGrid>
         <SimpleGrid
           position={"relative"}
@@ -135,6 +191,48 @@ const Governance = ({
             baseSpan={3}
             barDataKey="Success rate"
             lineDataKey="AVG Success rate"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={tPBInfo}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/8bd1b806-58db-41a8-91b2-db4999189bb1"
+            tooltipTitle=""
+            modelInfo=""
+            title="Daily transaction per block (TPB)"
+            baseSpan={3}
+            barDataKey="TX per Block"
+            lineDataKey="Average TX in Block"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={tPSInfo}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/118ed14d-9a10-4b4d-a8ab-7ff2255c9ddf"
+            tooltipTitle=""
+            modelInfo=""
+            title="Daily transaction per second (TPS)"
+            baseSpan={3}
+            barDataKey="TPS"
+            lineDataKey="Average TPS"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={dailyBlockAgeInfo}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/2691bf2a-25a6-4b8f-839f-804b82405b03"
+            tooltipTitle=""
+            modelInfo=""
+            title="Daily Block Age (sec)"
+            baseSpan={3}
+            barDataKey="Daily Block Age"
+            lineDataKey="Average Block Time"
             xAxisDataKey="Day"
           />
         </SimpleGrid>

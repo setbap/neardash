@@ -1,10 +1,12 @@
 import {
+  IDailyMostPoularTokenSwapVolumeOnRef,
   IDailyNewWalletOnRef,
   IDappsAndUSNAmount,
   IMostPopularActionOnRef,
   IMostPoularTokenSwapCountOnRef,
   IMostPoularTokenSwapVolumeOnRef,
   INumberOfSwapAndSwapperOnRefFi,
+  IRefSwappedVolumeIn2022,
   ISuccessAndFailRateOnRef,
   ITop100UsedContracts,
   ITransactionFeeGenerated,
@@ -99,6 +101,18 @@ export const getSuccessAndFailRateOnRef: () => Promise<
   );
 };
 
+export const getRefSwappedVolumeIn2022: () => Promise<
+  IRefSwappedVolumeIn2022[]
+> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/e5f735b1-ae92-4d83-9ce7-c4527600dbe0/data/latest"
+  );
+  const fetchedData: IRefSwappedVolumeIn2022[] = await res.json();
+  return fetchedData.sort((a, b) =>
+    moment(a.Day).isAfter(moment(b.Day)) ? 1 : -1
+  );
+};
+
 export const getMostPopularTokenSwapVolume: () => Promise<any> = async () => {
   const res = await fetch(
     "https://node-api.flipsidecrypto.com/api/v2/queries/1b716381-9b2b-461a-b984-c9e26398554e/data/latest"
@@ -157,17 +171,50 @@ export const getMostPopularTokenSwapCount: () => Promise<any> = async () => {
   };
 };
 
+export const getDailyMostPopularTokenSwapVolume: () => Promise<any> =
+  async () => {
+    const res = await fetch(
+      "https://node-api.flipsidecrypto.com/api/v2/queries/9e262b6b-e479-4834-85bb-89291555b531/data/latest"
+    );
+    const rawData: IDailyMostPoularTokenSwapVolumeOnRef[] = await res.json();
+    const actionType = Array.from(
+      new Set(
+        rawData.map((item) => {
+          return item.type;
+        })
+      )
+    );
+    const volumeInfo = pivotData(
+      rawData,
+      "Day",
+      "type",
+      "Volume USD",
+      actionType,
+      0
+    );
+    return {
+      volumeInfo: volumeInfo.sort((a, b) =>
+        // @ts-ignore
+        a["Name"] > b["Name"] ? 1 : -1
+      ),
+      actions: actionType,
+    };
+  };
+
 function pivotData<T extends { [key: string]: any }>(
   rawData: T[],
   xAxisKey2: keyof T,
   nameKey: keyof T,
   valueKey: keyof T,
   bridges: string[],
-  minValue: number = 0
+  minValue: number = 0,
+  isDate: boolean = false
 ) {
   const dailyEachBridgeSum: any = {};
   rawData.forEach((item) => {
-    const xAxisKey = item[xAxisKey2];
+    const xAxisKey = isDate
+      ? moment(item[xAxisKey2]).format("MM/DD/YYYY")
+      : item[xAxisKey2];
 
     if (!Boolean(item[valueKey]) || item[valueKey] < minValue) {
     } else if (dailyEachBridgeSum[xAxisKey] === undefined) {

@@ -52,3 +52,22 @@ export interface IMostPoularTokenSwapCountOnRef {
   Count: number;
   type: string;
 }
+
+export interface IDailyMostPoularTokenSwapVolumeOnRef {
+  Day: string;
+  "Volume USD": number;
+  type: string;
+}
+
+export interface IDayMostPoularTokenSwapCountOnRef {
+  Day: string;
+  Count: number;
+  type: string;
+}
+
+export interface IRefSwappedVolumeIn2022 {
+  Day: string;
+  "Volume USD": number;
+  "AVG Volume USD": number;
+  "Total Volume USD": number;
+}

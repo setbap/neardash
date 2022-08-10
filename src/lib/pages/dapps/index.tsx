@@ -9,6 +9,7 @@ import {
   IDappsAndUSNAmount,
   IMostPopularActionOnRef,
   INumberOfSwapAndSwapperOnRefFi,
+  IRefSwappedVolumeIn2022,
   ISuccessAndFailRateOnRef,
   ITop100UsedContracts,
   ITransactionFeeGenerated,
@@ -41,7 +42,7 @@ const colors = [
 
 interface Props {
   top100UsedContracts: ITop100UsedContracts[];
-
+  refSwappedVolumeIn2022: IRefSwappedVolumeIn2022[];
   numberOfSwapAndSwapperOnRefFi: INumberOfSwapAndSwapperOnRefFi[];
   mostDappsAndContractWithMostUSDTUSNUSDC: {
     usn: IDappsAndUSNAmount[];
@@ -54,19 +55,31 @@ interface Props {
   successAndFailRateOnRef: ISuccessAndFailRateOnRef[];
   mostPopularTokenSwapVolume: any;
   mostPopularTokenSwapCount: any;
+  dailyMostPopularTokenSwapVolume: any;
 }
 
 const Governance = ({
   top100UsedContracts,
   mostPopularActionOnRef,
   numberOfSwapAndSwapperOnRefFi,
+  refSwappedVolumeIn2022,
   mostDappsAndContractWithMostUSDTUSNUSDC,
   transactionFeeGenerated,
   dailyNewWalletOnRef,
   successAndFailRateOnRef,
   mostPopularTokenSwapVolume,
   mostPopularTokenSwapCount,
+  dailyMostPopularTokenSwapVolume,
 }: Props): JSX.Element => {
+  const volumeInLastDay =
+    refSwappedVolumeIn2022[refSwappedVolumeIn2022.length - 1][
+      "Total Volume USD"
+    ];
+  const volumeInDayBeforeLastDay =
+    refSwappedVolumeIn2022[refSwappedVolumeIn2022.length - 2][
+      "Total Volume USD"
+    ];
+  const hasVolumeGroth = volumeInLastDay > volumeInDayBeforeLastDay;
   return (
     <>
       <NextSeo
@@ -89,7 +102,14 @@ const Governance = ({
           my={"6"}
           columns={{ base: 1, md: 2, lg: 2, "2xl": 3 }}
           spacing={{ base: 5, lg: 8 }}
-        ></SimpleGrid>
+        >
+          <StatsCard
+            title="Total volume of Swaps on Ref finance since 2022"
+            link="https://app.flipsidecrypto.com/velocity/queries/e5f735b1-ae92-4d83-9ce7-c4527600dbe0"
+            stat={volumeInLastDay}
+            status={"inc"}
+          />
+        </SimpleGrid>
         <SimpleGrid
           position={"relative"}
           transition={"all 0.9s ease-in-out"}
@@ -153,6 +173,19 @@ const Governance = ({
             ]}
           />
 
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={refSwappedVolumeIn2022}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/e5f735b1-ae92-4d83-9ce7-c4527600dbe0"
+            tooltipTitle=""
+            modelInfo=""
+            title="Volume of Swaps on Ref finance since 2022"
+            baseSpan={3}
+            barDataKey="Volume USD"
+            lineDataKey="AVG Volume USD"
+            xAxisDataKey="Day"
+          />
           <CalendarChart
             data={numberOfSwapAndSwapperOnRefFi}
             queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
@@ -163,7 +196,6 @@ const Governance = ({
             areaDataKey="Unique Swpper"
             xAxisDataKey="Day"
           />
-
           <LineChartWithBar
             customColor={colors[1]}
             barColor={colors[3]}
@@ -290,6 +322,25 @@ const Governance = ({
             oxLabel="Day"
             baseSpan={3}
             labels={mostPopularTokenSwapCount.actions.map(
+              (type: string, index: number) => ({
+                color: colors[index],
+                key: type,
+              })
+            )}
+          />
+
+          <BarGraph
+            isSeprate
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/9e262b6b-e479-4834-85bb-89291555b531"
+            extraInfoToTooltip=""
+            modelInfo=""
+            values={dailyMostPopularTokenSwapVolume.volumeInfo}
+            title="Volume of Swapped from and to on Ref finance"
+            dataKey="Name"
+            oyLabel="Volume is USD"
+            oxLabel="Day"
+            baseSpan={3}
+            labels={dailyMostPopularTokenSwapVolume.actions.map(
               (type: string, index: number) => ({
                 color: colors[index],
                 key: type,

@@ -2,6 +2,7 @@ import {
   IDailyNewWalletOnRef,
   IDappsAndUSNAmount,
   IMostPopularActionOnRef,
+  IMostPoularTokenSwapCountOnRef,
   IMostPoularTokenSwapVolumeOnRef,
   INumberOfSwapAndSwapperOnRefFi,
   ISuccessAndFailRateOnRef,
@@ -119,7 +120,39 @@ export const getMostPopularTokenSwapVolume: () => Promise<any> = async () => {
     0
   );
   return {
-    volumeInfo,
+    volumeInfo: volumeInfo.sort((a, b) =>
+      // @ts-ignore
+      a[actionType[0]] > b[actionType[0]] ? -1 : 1
+    ),
+    actions: actionType,
+  };
+};
+
+export const getMostPopularTokenSwapCount: () => Promise<any> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/90429960-c3a4-46a0-aa10-be315d0e7362/data/latest"
+  );
+  const rawData: IMostPoularTokenSwapCountOnRef[] = await res.json();
+  const actionType = Array.from(
+    new Set(
+      rawData.map((item) => {
+        return item.type;
+      })
+    )
+  );
+  const countInfo = pivotData(
+    rawData,
+    "Symbol",
+    "type",
+    "Count",
+    actionType,
+    0
+  );
+  return {
+    countInfo: countInfo.sort((a, b) =>
+      // @ts-ignore
+      a[actionType[0]] > b[actionType[0]] ? -1 : 1
+    ),
     actions: actionType,
   };
 };

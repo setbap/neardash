@@ -3,6 +3,7 @@ import {
   getDailyNewWalletOnRef,
   getMostDappsAndContractWithMostUSDTUSNUSDC,
   getMostPopularActionOnRef,
+  getMostPopularTokenSwapCount,
   getMostPopularTokenSwapVolume,
   getNumberOfSwapAndSwapperOnRefFi,
   getSuccessAndFailRateOnRef,
@@ -19,6 +20,7 @@ export async function getStaticProps() {
     dailyNewWalletOnRef,
     successAndFailRateOnRef,
     mostPopularTokenSwapVolume,
+    mostPopularTokenSwapCount,
   ] = await Promise.all([
     // statics
 
@@ -30,6 +32,7 @@ export async function getStaticProps() {
     getDailyNewWalletOnRef(),
     getSuccessAndFailRateOnRef(),
     getMostPopularTokenSwapVolume(),
+    getMostPopularTokenSwapCount(),
   ]);
   return {
     props: {
@@ -41,6 +44,7 @@ export async function getStaticProps() {
       dailyNewWalletOnRef,
       successAndFailRateOnRef,
       mostPopularTokenSwapVolume,
+      mostPopularTokenSwapCount,
     },
     revalidate: 10 * 60,
   };

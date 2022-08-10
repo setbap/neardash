@@ -53,6 +53,7 @@ interface Props {
   dailyNewWalletOnRef: IDailyNewWalletOnRef[];
   successAndFailRateOnRef: ISuccessAndFailRateOnRef[];
   mostPopularTokenSwapVolume: any;
+  mostPopularTokenSwapCount: any;
 }
 
 const Governance = ({
@@ -64,6 +65,7 @@ const Governance = ({
   dailyNewWalletOnRef,
   successAndFailRateOnRef,
   mostPopularTokenSwapVolume,
+  mostPopularTokenSwapCount,
 }: Props): JSX.Element => {
   return (
     <>
@@ -262,12 +264,32 @@ const Governance = ({
             extraInfoToTooltip=""
             modelInfo=""
             values={mostPopularTokenSwapVolume.volumeInfo}
-            title="meta-pool and astro-stakers.poolv1 activity"
+            title="Most popular token for swapping based on volume on Ref finance"
             dataKey="Name"
             oyLabel="Volume is USD"
             oxLabel="Day"
             baseSpan={3}
             labels={mostPopularTokenSwapVolume.actions.map(
+              (type: string, index: number) => ({
+                color: colors[index],
+                key: type,
+              })
+            )}
+          />
+
+          <BarGraph
+            isNotDate
+            isSeprate
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/90429960-c3a4-46a0-aa10-be315d0e7362"
+            extraInfoToTooltip=""
+            modelInfo=""
+            values={mostPopularTokenSwapCount.countInfo}
+            title="Most popular token for swapping based on count on Ref finance"
+            dataKey="Name"
+            oyLabel="TX Count"
+            oxLabel="Day"
+            baseSpan={3}
+            labels={mostPopularTokenSwapCount.actions.map(
               (type: string, index: number) => ({
                 color: colors[index],
                 key: type,

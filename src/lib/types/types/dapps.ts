@@ -46,3 +46,9 @@ export interface IMostPoularTokenSwapVolumeOnRef {
   "Volume USD": number;
   type: string;
 }
+
+export interface IMostPoularTokenSwapCountOnRef {
+  Symbol: string;
+  Count: number;
+  type: string;
+}

@@ -1,5 +1,6 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import BarGraph from "lib/components/charts/BarGraph";
+import MyCalendarChart from "lib/components/charts/CalendarChart";
 import DonutChart from "lib/components/charts/DonutChart";
 import LineChartWithBar from "lib/components/charts/LineChartWithBar";
 import { StatsCard } from "lib/components/charts/StateCard";
@@ -10,6 +11,14 @@ import {
 } from "lib/types/types/dapps";
 
 import { NextSeo } from "next-seo";
+import dynamic from "next/dynamic";
+
+const CalendarChart: any = dynamic(
+  () => import("../../components/charts/CalendarChart"),
+  {
+    ssr: false,
+  }
+);
 
 const colors = [
   "#ff5722",
@@ -131,6 +140,16 @@ const Governance = ({
             baseSpan={3}
             barDataKey="Unique Swpper"
             lineDataKey="AVG Unique Swpper"
+            xAxisDataKey="Day"
+          />
+          <CalendarChart
+            data={numberOfSwapAndSwapperOnRefFi}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
+            tooltipTitle=""
+            modelInfo=""
+            title="Number of Swap transactions on Ref finance"
+            baseSpan={3}
+            areaDataKey="TX Count"
             xAxisDataKey="Day"
           />
 

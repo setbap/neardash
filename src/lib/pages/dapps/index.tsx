@@ -129,6 +129,17 @@ const Governance = ({
             ]}
           />
 
+          <CalendarChart
+            data={numberOfSwapAndSwapperOnRefFi}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
+            tooltipTitle=""
+            modelInfo=""
+            title="Number of unique swapper on Ref finance"
+            baseSpan={3}
+            areaDataKey="Unique Swpper"
+            xAxisDataKey="Day"
+          />
+
           <LineChartWithBar
             customColor={colors[1]}
             barColor={colors[3]}

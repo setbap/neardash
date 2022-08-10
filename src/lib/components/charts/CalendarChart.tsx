@@ -142,10 +142,13 @@ const CalendarChart = ({
             .toDate()}
           emptyColor="#999"
           colors={[
+            "#efe",
+            "#cfc",
+            "#afa",
+            "#9f9",
             "#61ffbb",
             "#97e3d5",
             "#a7e3d5",
-            "#f7e3d5",
             "#e8c1a0",
             "#a57560",
             "#b47560",

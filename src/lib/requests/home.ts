@@ -4,6 +4,7 @@ import {
   IDailySuccessAndFailedRate,
   IDailyTPB,
   IDailyTPS,
+  INumberOfSwapAndSwapperOnRefFi,
   ITop100UsedContracts,
   ITotalPerformanceInfo,
 } from "lib/types/types/home";
@@ -25,6 +26,18 @@ export const getTotalPerformanceInfo =
     const data: ITotalPerformanceInfo = (await res.json())[0];
     return data;
   };
+
+export const getNumberOfSwapAndSwapperOnRefFi: () => Promise<
+  INumberOfSwapAndSwapperOnRefFi[]
+> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/9f832aea-5120-4f40-a992-52c408d08694/data/latest"
+  );
+  const fetchedData: INumberOfSwapAndSwapperOnRefFi[] = await res.json();
+  return fetchedData.sort((a, b) =>
+    moment(a.Day).isAfter(moment(b.Day)) ? 1 : -1
+  );
+};
 
 export const getDailyNewWallet: () => Promise<IDailyNewWallet[]> = async () => {
   const res = await fetch(

@@ -44,3 +44,11 @@ export interface ITotalPerformanceInfo {
   "Max TX count per block": number;
   "Average TX count per block": number;
 }
+
+export interface INumberOfSwapAndSwapperOnRefFi {
+  Day: string;
+  "TX Count": number;
+  "Unique Swpper": number;
+  "AVG TX Count": number;
+  "AVG Unique Swpper": number;
+}

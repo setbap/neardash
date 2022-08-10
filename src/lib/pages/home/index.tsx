@@ -8,6 +8,7 @@ import {
   IDailySuccessAndFailedRate,
   IDailyTPB,
   IDailyTPS,
+  INumberOfSwapAndSwapperOnRefFi,
   ITop100UsedContracts,
   ITotalPerformanceInfo,
 } from "lib/types/types/home";
@@ -41,6 +42,7 @@ interface Props {
   tPBInfo: IDailyTPB[];
   // not impelemented yet
   totalPerformanceInfo: ITotalPerformanceInfo;
+  numberOfSwapAndSwapperOnRefFi: INumberOfSwapAndSwapperOnRefFi[];
 }
 
 const Governance = ({
@@ -52,6 +54,7 @@ const Governance = ({
   dailyBlockAgeInfo,
   tPSInfo,
   tPBInfo,
+  numberOfSwapAndSwapperOnRefFi,
 }: Props): JSX.Element => {
   return (
     <>
@@ -82,7 +85,6 @@ const Governance = ({
             status="inc"
             link="https://app.flipsidecrypto.com/velocity/queries/c2f68189-0f79-4b9b-a41a-ae642c53921c"
           />
-          {/* === */}
           <StatsCard
             stat={totalPerformanceInfo["Min Block Time"]}
             title="Min Block Time (sec)"
@@ -124,7 +126,6 @@ const Governance = ({
             status="dec"
             link="https://app.flipsidecrypto.com/velocity/queries/72629900-1d61-4094-8a4c-a83db0c32f40"
           />
-          {/* === */}
         </SimpleGrid>
         <SimpleGrid
           position={"relative"}
@@ -233,6 +234,34 @@ const Governance = ({
             baseSpan={3}
             barDataKey="Daily Block Age"
             lineDataKey="Average Block Time"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={numberOfSwapAndSwapperOnRefFi}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
+            tooltipTitle=""
+            modelInfo=""
+            title="Number of unique swapper on Ref finance"
+            baseSpan={3}
+            barDataKey="Unique Swpper"
+            lineDataKey="AVG Unique Swpper"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={numberOfSwapAndSwapperOnRefFi}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
+            tooltipTitle=""
+            modelInfo=""
+            title="Number of Swap transactions on Ref finance"
+            baseSpan={3}
+            barDataKey="TX Count"
+            lineDataKey="AVG TX Count"
             xAxisDataKey="Day"
           />
         </SimpleGrid>

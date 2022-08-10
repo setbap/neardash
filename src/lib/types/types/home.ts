@@ -52,3 +52,8 @@ export interface INumberOfSwapAndSwapperOnRefFi {
   "AVG TX Count": number;
   "AVG Unique Swpper": number;
 }
+
+export interface IDappsAndUSNAmount {
+  Contract: string;
+  "USN amount": number;
+}

@@ -1,5 +1,6 @@
 import { Box, Button, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import BarGraph from "lib/components/charts/BarGraph";
+import DonutChart from "lib/components/charts/DonutChart";
 import LineChartWithBar from "lib/components/charts/LineChartWithBar";
 import { StatsCard } from "lib/components/charts/StateCard";
 import {
@@ -8,6 +9,7 @@ import {
   IDailySuccessAndFailedRate,
   IDailyTPB,
   IDailyTPS,
+  IDappsAndUSNAmount,
   INumberOfSwapAndSwapperOnRefFi,
   ITop100UsedContracts,
   ITotalPerformanceInfo,
@@ -43,6 +45,11 @@ interface Props {
   // not impelemented yet
   totalPerformanceInfo: ITotalPerformanceInfo;
   numberOfSwapAndSwapperOnRefFi: INumberOfSwapAndSwapperOnRefFi[];
+  mostDappsAndContractWithMostUSDTUSNUSDC: {
+    usn: IDappsAndUSNAmount[];
+    usdc: IDappsAndUSNAmount[];
+    usdt: IDappsAndUSNAmount[];
+  };
 }
 
 const Governance = ({
@@ -55,6 +62,7 @@ const Governance = ({
   tPSInfo,
   tPBInfo,
   numberOfSwapAndSwapperOnRefFi,
+  mostDappsAndContractWithMostUSDTUSNUSDC,
 }: Props): JSX.Element => {
   return (
     <>
@@ -135,6 +143,34 @@ const Governance = ({
           columns={{ sm: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 1, md: 2, lg: 4 }}
         >
+          <DonutChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/6fa15eba-c264-4b97-8557-f1cf103f801e"
+            data={mostDappsAndContractWithMostUSDTUSNUSDC.usn}
+            tooltipTitle=""
+            modelInfo=""
+            title="which dapps and addresses hold the majority of USN?"
+            nameKey="Contract"
+            dataKey="USN amount"
+          />
+
+          <DonutChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/5cc44617-4012-4713-844c-8a6588606df4"
+            data={mostDappsAndContractWithMostUSDTUSNUSDC.usdc}
+            tooltipTitle=""
+            modelInfo=""
+            title="which dapps and addresses hold the majority of USDC?"
+            nameKey="Contract"
+            dataKey="USDC amount"
+          />
+          <DonutChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/29feb570-2f6a-4a22-a732-126688ec3d55"
+            data={mostDappsAndContractWithMostUSDTUSNUSDC.usdt}
+            tooltipTitle=""
+            modelInfo=""
+            title="which dapps and addresses hold the majority of USDT?"
+            nameKey="Contract"
+            dataKey="USDT amount"
+          />
           <BarGraph
             queryLink="https://app.flipsidecrypto.com/velocity/queries/3315b247-9f09-43c2-8533-f7dcf0f45722"
             modelInfo=""

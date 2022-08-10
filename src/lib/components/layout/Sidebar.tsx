@@ -22,13 +22,9 @@ import { IconType } from "react-icons";
 import { ReactText } from "react";
 import { useRouter } from "next/router";
 import {
-  AiFillMoneyCollect,
   AiOutlineInfoCircle,
-  AiOutlineShareAlt,
 } from "react-icons/ai";
 import MotionBox from "../motion/Box";
-import { CgPerformance } from "react-icons/cg";
-import { FaMoneyBillAlt } from "react-icons/fa";
 
 interface LinkItemProps {
   name: string;
@@ -36,7 +32,8 @@ interface LinkItemProps {
   path: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Performance", path: "/", icon: FiHome },
+  { name: "Dapps", path: "/", icon: FiHome },
+  { name: "Performance", path: "/performance", icon: FiHome },
   { name: "Governance", path: "/governance", icon: FiHome },
   // { name: "TX History", path: "/transactions", icon: AiOutlineInfoCircle },
   { name: "About", path: "/about", icon: AiOutlineInfoCircle },

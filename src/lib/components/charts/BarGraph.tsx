@@ -29,7 +29,6 @@ import LinkToSourceMenuItem from "../basic/LinkToSourceMenuItem";
 const BarGraph = ({
   title,
   dataKey,
-  oxLabel,
   oyLabel,
   values,
   baseSpan = 1,
@@ -91,7 +90,7 @@ const BarGraph = ({
   const selectBar = (e: any) => {
     const numberOfBars = Object.keys(barProps).length - 1;
     const numberOfHideBars = Object.entries(barProps).filter(
-      ([key, value]) => value == true
+      ([, value]) => value == true
     ).length;
 
     if (numberOfBars === numberOfHideBars + 1 && !barProps[e.dataKey]) {

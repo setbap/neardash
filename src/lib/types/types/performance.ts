@@ -11,10 +11,7 @@ export interface IDailySuccessAndFailedRate {
   "AVG Success rate": number;
 }
 
-export interface ITop100UsedContracts {
-  Name: string;
-  Counts: number;
-}
+
 
 export interface IDailyBlockAge {
   Day: string;
@@ -45,15 +42,3 @@ export interface ITotalPerformanceInfo {
   "Average TX count per block": number;
 }
 
-export interface INumberOfSwapAndSwapperOnRefFi {
-  Day: string;
-  "TX Count": number;
-  "Unique Swpper": number;
-  "AVG TX Count": number;
-  "AVG Unique Swpper": number;
-}
-
-export interface IDappsAndUSNAmount {
-  Contract: string;
-  "USN amount": number;
-}

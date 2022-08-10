@@ -40,3 +40,9 @@ export interface ISuccessAndFailRateOnRef {
   "AVG Failed rate": number;
   "AVG Success rate": number;
 }
+
+export interface IMostPoularTokenSwapVolumeOnRef {
+  Symbol: string;
+  "Volume USD": number;
+  type: string;
+}

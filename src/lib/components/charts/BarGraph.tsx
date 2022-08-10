@@ -40,6 +40,7 @@ const BarGraph = ({
   defualtTime = "day",
   queryLink,
   disclaimer,
+  isSeprate = false,
 }: {
   defualtTime?: "day" | "month";
   title: string;
@@ -52,6 +53,7 @@ const BarGraph = ({
   values: any[];
   modelInfo: string;
   baseSpan?: number;
+  isSeprate?: boolean;
   queryLink?: string;
   extraInfoToTooltip?: string;
   labels: { key: string; color: string }[];
@@ -268,7 +270,7 @@ const BarGraph = ({
                 key={index}
                 dataKey={label.key}
                 fill={label.color}
-                stackId={dataKey}
+                stackId={isSeprate ? index : dataKey}
                 hide={barProps[label.key] === true}
                 fillOpacity={Number(
                   barProps.hover === label.key || !barProps.hover ? 1 : 0.6

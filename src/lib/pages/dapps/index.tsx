@@ -52,6 +52,7 @@ interface Props {
   transactionFeeGenerated: ITransactionFeeGenerated[];
   dailyNewWalletOnRef: IDailyNewWalletOnRef[];
   successAndFailRateOnRef: ISuccessAndFailRateOnRef[];
+  mostPopularTokenSwapVolume: any;
 }
 
 const Governance = ({
@@ -62,6 +63,7 @@ const Governance = ({
   transactionFeeGenerated,
   dailyNewWalletOnRef,
   successAndFailRateOnRef,
+  mostPopularTokenSwapVolume,
 }: Props): JSX.Element => {
   return (
     <>
@@ -251,6 +253,26 @@ const Governance = ({
             barDataKey="Success rate"
             lineDataKey="AVG Success rate"
             xAxisDataKey="Day"
+          />
+
+          <BarGraph
+            isNotDate
+            isSeprate
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/1b716381-9b2b-461a-b984-c9e26398554e"
+            extraInfoToTooltip=""
+            modelInfo=""
+            values={mostPopularTokenSwapVolume.volumeInfo}
+            title="meta-pool and astro-stakers.poolv1 activity"
+            dataKey="Name"
+            oyLabel="Volume is USD"
+            oxLabel="Day"
+            baseSpan={3}
+            labels={mostPopularTokenSwapVolume.actions.map(
+              (type: string, index: number) => ({
+                color: colors[index],
+                key: type,
+              })
+            )}
           />
         </SimpleGrid>
       </Box>

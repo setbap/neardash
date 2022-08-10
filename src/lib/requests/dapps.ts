@@ -2,6 +2,7 @@ import {
   IDailyNewWalletOnRef,
   IDappsAndUSNAmount,
   IMostPopularActionOnRef,
+  IMostPoularTokenSwapVolumeOnRef,
   INumberOfSwapAndSwapperOnRefFi,
   ISuccessAndFailRateOnRef,
   ITop100UsedContracts,
@@ -96,3 +97,66 @@ export const getSuccessAndFailRateOnRef: () => Promise<
     moment(a.Day).isAfter(moment(b.Day)) ? 1 : -1
   );
 };
+
+export const getMostPopularTokenSwapVolume: () => Promise<any> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/1b716381-9b2b-461a-b984-c9e26398554e/data/latest"
+  );
+  const rawData: IMostPoularTokenSwapVolumeOnRef[] = await res.json();
+  const actionType = Array.from(
+    new Set(
+      rawData.map((item) => {
+        return item.type;
+      })
+    )
+  );
+  const volumeInfo = pivotData(
+    rawData,
+    "Symbol",
+    "type",
+    "Volume USD",
+    actionType,
+    0
+  );
+  return {
+    volumeInfo,
+    actions: actionType,
+  };
+};
+
+function pivotData<T extends { [key: string]: any }>(
+  rawData: T[],
+  xAxisKey2: keyof T,
+  nameKey: keyof T,
+  valueKey: keyof T,
+  bridges: string[],
+  minValue: number = 0
+) {
+  const dailyEachBridgeSum: any = {};
+  rawData.forEach((item) => {
+    const xAxisKey = item[xAxisKey2];
+
+    if (!Boolean(item[valueKey]) || item[valueKey] < minValue) {
+    } else if (dailyEachBridgeSum[xAxisKey] === undefined) {
+      dailyEachBridgeSum[xAxisKey] = {};
+      dailyEachBridgeSum[xAxisKey][item[nameKey]] = item[valueKey];
+    } else if (dailyEachBridgeSum[xAxisKey][item[nameKey]] === undefined) {
+      dailyEachBridgeSum[xAxisKey][item[nameKey]] = item[valueKey];
+    } else {
+      dailyEachBridgeSum[xAxisKey][item[nameKey]] += item[valueKey];
+    }
+  });
+  const dailyBridgeValue = Object.entries(dailyEachBridgeSum).map((bc) => {
+    const finalObject = { Name: bc[0] };
+    bridges.forEach((bridge) => {
+      // @ts-ignore
+      if (bc[1][bridge]) {
+        // @ts-ignore
+        finalObject[bridge] = bc[1][bridge];
+      }
+    });
+    return finalObject;
+  });
+
+  return dailyBridgeValue;
+}

@@ -1,7 +1,10 @@
 import {
+  IDailyNewWalletOnRef,
   IDappsAndUSNAmount,
+  IMostPopularActionOnRef,
   INumberOfSwapAndSwapperOnRefFi,
   ITop100UsedContracts,
+  ITransactionFeeGenerated,
 } from "lib/types/types/dapps";
 import moment from "moment";
 
@@ -45,4 +48,34 @@ export const getNumberOfSwapAndSwapperOnRefFi: () => Promise<
   return fetchedData.sort((a, b) =>
     moment(a.Day).isAfter(moment(b.Day)) ? 1 : -1
   );
+};
+
+export const getMostPopularActionOnRef: () => Promise<
+  IMostPopularActionOnRef[]
+> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/5ac84025-7ca8-4b79-93c6-26280322a2d3/data/latest"
+  );
+  const fetchedData: IMostPopularActionOnRef[] = await res.json();
+  return fetchedData;
+};
+
+export const getTransactionFeeGenerated: () => Promise<
+  ITransactionFeeGenerated[]
+> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/165d1ede-d5dc-46c1-9542-0dd8a8999bf7/data/latest"
+  );
+  const fetchedData: ITransactionFeeGenerated[] = await res.json();
+  return fetchedData;
+};
+
+export const getDailyNewWalletOnRef: () => Promise<
+  IDailyNewWalletOnRef[]
+> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/f0186fc1-92ff-44bb-b70f-122c6ecf5117/data/latest"
+  );
+  const fetchedData: IDailyNewWalletOnRef[] = await res.json();
+  return fetchedData;
 };

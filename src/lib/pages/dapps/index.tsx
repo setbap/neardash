@@ -5,9 +5,12 @@ import DonutChart from "lib/components/charts/DonutChart";
 import LineChartWithBar from "lib/components/charts/LineChartWithBar";
 import { StatsCard } from "lib/components/charts/StateCard";
 import {
+  IDailyNewWalletOnRef,
   IDappsAndUSNAmount,
+  IMostPopularActionOnRef,
   INumberOfSwapAndSwapperOnRefFi,
   ITop100UsedContracts,
+  ITransactionFeeGenerated,
 } from "lib/types/types/dapps";
 
 import { NextSeo } from "next-seo";
@@ -44,13 +47,18 @@ interface Props {
     usdc: IDappsAndUSNAmount[];
     usdt: IDappsAndUSNAmount[];
   };
+  mostPopularActionOnRef: IMostPopularActionOnRef[];
+  transactionFeeGenerated: ITransactionFeeGenerated[];
+  dailyNewWalletOnRef: IDailyNewWalletOnRef[];
 }
 
 const Governance = ({
   top100UsedContracts,
-
+  mostPopularActionOnRef,
   numberOfSwapAndSwapperOnRefFi,
   mostDappsAndContractWithMostUSDTUSNUSDC,
+  transactionFeeGenerated,
+  dailyNewWalletOnRef,
 }: Props): JSX.Element => {
   return (
     <>
@@ -110,6 +118,15 @@ const Governance = ({
             title="which dapps and addresses hold the majority of USDT?"
             nameKey="Contract"
             dataKey="USDT amount"
+          />
+          <DonutChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/5ac84025-7ca8-4b79-93c6-26280322a2d3"
+            data={mostPopularActionOnRef}
+            tooltipTitle=""
+            modelInfo=""
+            title="Most popular action on Ref finance"
+            nameKey="Action"
+            dataKey="TX count"
           />
           <BarGraph
             queryLink="https://app.flipsidecrypto.com/velocity/queries/3315b247-9f09-43c2-8533-f7dcf0f45722"
@@ -175,6 +192,33 @@ const Governance = ({
             baseSpan={3}
             barDataKey="TX Count"
             lineDataKey="AVG TX Count"
+            xAxisDataKey="Day"
+          />
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={transactionFeeGenerated}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/165d1ede-d5dc-46c1-9542-0dd8a8999bf7"
+            tooltipTitle=""
+            modelInfo=""
+            title="Transactions fee spent on Ref finance"
+            baseSpan={3}
+            barDataKey="Fee"
+            lineDataKey="Avg Fee"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={dailyNewWalletOnRef}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/f0186fc1-92ff-44bb-b70f-122c6ecf5117"
+            tooltipTitle=""
+            modelInfo=""
+            title="Daily New Wallets on Ref finance"
+            baseSpan={3}
+            barDataKey="New Wallets"
+            lineDataKey="Avg New Wallets"
             xAxisDataKey="Day"
           />
         </SimpleGrid>

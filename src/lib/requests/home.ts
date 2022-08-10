@@ -88,7 +88,7 @@ export const getTop100UsedContracts: () => Promise<
     "https://node-api.flipsidecrypto.com/api/v2/queries/3315b247-9f09-43c2-8533-f7dcf0f45722/data/latest"
   );
   const fetchedData: ITop100UsedContracts[] = await res.json();
-  return fetchedData.sort((a, b) => (a.Counts > b.Counts ? 1 : -1));
+  return fetchedData.sort((a, b) => (a.Counts > b.Counts ? -1 : 1)).reverse();
 };
 
 export const getDailyBlockAge: () => Promise<IDailyBlockAge[]> = async () => {

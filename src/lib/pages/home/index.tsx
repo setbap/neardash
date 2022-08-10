@@ -1,4 +1,4 @@
-import { Box, Button, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 import BarGraph from "lib/components/charts/BarGraph";
 import DonutChart from "lib/components/charts/DonutChart";
 import LineChartWithBar from "lib/components/charts/LineChartWithBar";

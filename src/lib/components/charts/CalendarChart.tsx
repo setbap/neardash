@@ -136,8 +136,10 @@ const CalendarChart = ({
             value: d[areaDataKey],
             day: moment(d[xAxisDataKey]).format("YYYY-MM-DD"),
           }))}
-          from={`${selectedDate}-01-02`}
-          to={`${+selectedDate + 1}-01-01`}
+          from={moment(`${+selectedDate}-01-01`).toDate()}
+          to={moment(`${+selectedDate + 1}-01-01`)
+            .subtract(1, "day")
+            .toDate()}
           emptyColor="#999"
           colors={[
             "#61ffbb",

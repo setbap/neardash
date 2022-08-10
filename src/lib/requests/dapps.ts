@@ -3,6 +3,7 @@ import {
   IDappsAndUSNAmount,
   IMostPopularActionOnRef,
   INumberOfSwapAndSwapperOnRefFi,
+  ISuccessAndFailRateOnRef,
   ITop100UsedContracts,
   ITransactionFeeGenerated,
 } from "lib/types/types/dapps";
@@ -67,7 +68,9 @@ export const getTransactionFeeGenerated: () => Promise<
     "https://node-api.flipsidecrypto.com/api/v2/queries/165d1ede-d5dc-46c1-9542-0dd8a8999bf7/data/latest"
   );
   const fetchedData: ITransactionFeeGenerated[] = await res.json();
-  return fetchedData;
+  return fetchedData.sort((a, b) =>
+    moment(a.Day).isAfter(moment(b.Day)) ? 1 : -1
+  );
 };
 
 export const getDailyNewWalletOnRef: () => Promise<
@@ -77,5 +80,19 @@ export const getDailyNewWalletOnRef: () => Promise<
     "https://node-api.flipsidecrypto.com/api/v2/queries/f0186fc1-92ff-44bb-b70f-122c6ecf5117/data/latest"
   );
   const fetchedData: IDailyNewWalletOnRef[] = await res.json();
-  return fetchedData;
+  return fetchedData.sort((a, b) =>
+    moment(a.Day).isAfter(moment(b.Day)) ? 1 : -1
+  );
+};
+
+export const getSuccessAndFailRateOnRef: () => Promise<
+  ISuccessAndFailRateOnRef[]
+> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/5a857256-6887-46b8-a5f8-aa23cf8b88a8/data/latest"
+  );
+  const fetchedData: ISuccessAndFailRateOnRef[] = await res.json();
+  return fetchedData.sort((a, b) =>
+    moment(a.Day).isAfter(moment(b.Day)) ? 1 : -1
+  );
 };

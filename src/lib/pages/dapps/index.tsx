@@ -9,6 +9,7 @@ import {
   IDappsAndUSNAmount,
   IMostPopularActionOnRef,
   INumberOfSwapAndSwapperOnRefFi,
+  ISuccessAndFailRateOnRef,
   ITop100UsedContracts,
   ITransactionFeeGenerated,
 } from "lib/types/types/dapps";
@@ -50,6 +51,7 @@ interface Props {
   mostPopularActionOnRef: IMostPopularActionOnRef[];
   transactionFeeGenerated: ITransactionFeeGenerated[];
   dailyNewWalletOnRef: IDailyNewWalletOnRef[];
+  successAndFailRateOnRef: ISuccessAndFailRateOnRef[];
 }
 
 const Governance = ({
@@ -59,6 +61,7 @@ const Governance = ({
   mostDappsAndContractWithMostUSDTUSNUSDC,
   transactionFeeGenerated,
   dailyNewWalletOnRef,
+  successAndFailRateOnRef,
 }: Props): JSX.Element => {
   return (
     <>
@@ -219,6 +222,34 @@ const Governance = ({
             baseSpan={3}
             barDataKey="New Wallets"
             lineDataKey="Avg New Wallets"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[5]}
+            data={successAndFailRateOnRef}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/5a857256-6887-46b8-a5f8-aa23cf8b88a8"
+            tooltipTitle=""
+            modelInfo=""
+            title="Daily failed rate on Ref finance"
+            baseSpan={3}
+            barDataKey="Failed rate"
+            lineDataKey="AVG Failed rate"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={successAndFailRateOnRef}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/5a857256-6887-46b8-a5f8-aa23cf8b88a8"
+            tooltipTitle=""
+            modelInfo=""
+            title="Daily success rate on Ref finance"
+            baseSpan={3}
+            barDataKey="Success rate"
+            lineDataKey="AVG Success rate"
             xAxisDataKey="Day"
           />
         </SimpleGrid>

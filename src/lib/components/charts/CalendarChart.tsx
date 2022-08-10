@@ -140,7 +140,7 @@ const CalendarChart = ({
           to={moment(`${+selectedDate + 1}-01-01`)
             .subtract(1, "day")
             .toDate()}
-          emptyColor="#999"
+          emptyColor="#aaa2"
           colors={[
             "#efe",
             "#cfc",

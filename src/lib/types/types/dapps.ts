@@ -32,3 +32,11 @@ export interface IDailyNewWalletOnRef {
   "New Wallets": number;
   "Avg New Wallets": number;
 }
+
+export interface ISuccessAndFailRateOnRef {
+  Day: string;
+  "Failed rate": number;
+  "Success rate": number;
+  "AVG Failed rate": number;
+  "AVG Success rate": number;
+}

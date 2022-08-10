@@ -4,6 +4,7 @@ import {
   getMostDappsAndContractWithMostUSDTUSNUSDC,
   getMostPopularActionOnRef,
   getNumberOfSwapAndSwapperOnRefFi,
+  getSuccessAndFailRateOnRef,
   getTop100UsedContracts,
   getTransactionFeeGenerated,
 } from "lib/requests/dapps";
@@ -15,6 +16,7 @@ export async function getStaticProps() {
     mostPopularActionOnRef,
     transactionFeeGenerated,
     dailyNewWalletOnRef,
+    successAndFailRateOnRef,
   ] = await Promise.all([
     // statics
 
@@ -24,6 +26,7 @@ export async function getStaticProps() {
     getMostPopularActionOnRef(),
     getTransactionFeeGenerated(),
     getDailyNewWalletOnRef(),
+    getSuccessAndFailRateOnRef(),
   ]);
   return {
     props: {
@@ -33,6 +36,7 @@ export async function getStaticProps() {
       mostPopularActionOnRef,
       transactionFeeGenerated,
       dailyNewWalletOnRef,
+      successAndFailRateOnRef,
     },
     revalidate: 10 * 60,
   };

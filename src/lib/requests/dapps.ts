@@ -136,6 +136,27 @@ export const getSwapFromStablecoinsToOthers: () => Promise<ISankeyChartBase> =
     };
   };
 
+export const getSwapToStablecoinsToOthers: () => Promise<ISankeyChartBase> =
+  async () => {
+    const res = await fetch(
+      "https://node-api.flipsidecrypto.com/api/v2/queries/e2441a8e-19e1-4ebf-aca7-961e1e3023cd/data/latest"
+    );
+    const fetchedData: IStablecoinSwap[] = await res.json();
+    const fromCoins = fetchedData.map((item) => item["Swap from"]);
+    const toCoins = fetchedData.map((item) => item["Swap to"] + " ");
+    const nodesSet = new Set(fromCoins.concat(toCoins));
+    const nodes = Array.from(nodesSet);
+    const links = fetchedData.map((item) => ({
+      source: item["Swap from"],
+      target: item["Swap to"] + " ",
+      value: item["Volume USD"],
+    }));
+    return {
+      nodes,
+      links,
+    };
+  };
+
 export const getMostPopularTokenSwapVolume: () => Promise<any> = async () => {
   const res = await fetch(
     "https://node-api.flipsidecrypto.com/api/v2/queries/1b716381-9b2b-461a-b984-c9e26398554e/data/latest"

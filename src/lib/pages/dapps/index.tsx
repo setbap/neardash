@@ -62,6 +62,7 @@ interface Props {
   dailyNewWalletOnRef: IDailyNewWalletOnRef[];
   successAndFailRateOnRef: ISuccessAndFailRateOnRef[];
   swapFromStablecoinsToOthers: ISankeyChartBase;
+  swapToStablecoinsToOthers: ISankeyChartBase;
   mostPopularTokenSwapVolume: any;
   mostPopularTokenSwapCount: any;
 }
@@ -78,19 +79,23 @@ const Governance = ({
   mostPopularTokenSwapVolume,
   mostPopularTokenSwapCount,
   swapFromStablecoinsToOthers,
+  swapToStablecoinsToOthers,
 }: Props): JSX.Element => {
   const volumeInLastDay =
     refSwappedVolumeIn2022[refSwappedVolumeIn2022.length - 1][
       "Total Volume USD"
     ];
-  const volumeInDayBeforeLastDay =
-    refSwappedVolumeIn2022[refSwappedVolumeIn2022.length - 2][
-      "Total Volume USD"
-    ];
-  const hasVolumeGroth = volumeInLastDay > volumeInDayBeforeLastDay;
-  const sankeyChartData: ISankeyChart = {
+
+  const finalSwapFromStablecoinsToOthers: ISankeyChart = {
     links: swapFromStablecoinsToOthers.links,
     nodes: swapFromStablecoinsToOthers.nodes.map(
+      (node: string, index: number) => ({ color: colors[index], id: node })
+    ),
+  };
+
+  const finalSwapToStablecoinsToOthers: ISankeyChart = {
+    links: swapToStablecoinsToOthers.links,
+    nodes: swapToStablecoinsToOthers.nodes.map(
       (node: string, index: number) => ({ color: colors[index], id: node })
     ),
   };
@@ -149,14 +154,6 @@ const Governance = ({
               },
             ]}
           />
-          <FlowChart
-            data={sankeyChartData}
-            modelInfo=""
-            title="Swap from Stablecoins to Others"
-            tooltipTitle=""
-            baseSpan={3}
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/9483c686-f6d4-469c-9d68-f0bcbb411f8e"
-          />
 
           <DonutChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/6fa15eba-c264-4b97-8557-f1cf103f801e"
@@ -199,39 +196,59 @@ const Governance = ({
           <LineChartWithBar
             customColor={colors[1]}
             barColor={colors[3]}
-            data={refSwappedVolumeIn2022}
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/e5f735b1-ae92-4d83-9ce7-c4527600dbe0"
+            data={dailyNewWalletOnRef}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/f0186fc1-92ff-44bb-b70f-122c6ecf5117"
             tooltipTitle=""
             modelInfo=""
-            title="Volume of Swaps on Ref finance since 2022"
+            title="New Wallets on Ref finance"
             baseSpan={3}
-            barDataKey="Volume USD"
-            lineDataKey="AVG Volume USD"
+            barDataKey="New Wallets"
+            lineDataKey="Avg New Wallets"
             xAxisDataKey="Day"
           />
-          <CalendarChart
-            data={numberOfSwapAndSwapperOnRefFi}
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
-            tooltipTitle=""
-            modelInfo=""
-            title="Number of unique swapper on Ref finance"
-            baseSpan={3}
-            areaDataKey="Unique Swpper"
-            xAxisDataKey="Day"
-          />
+
           <LineChartWithBar
             customColor={colors[1]}
             barColor={colors[3]}
-            data={numberOfSwapAndSwapperOnRefFi}
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
+            data={successAndFailRateOnRef}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/5a857256-6887-46b8-a5f8-aa23cf8b88a8"
             tooltipTitle=""
             modelInfo=""
-            title="Number of unique swapper on Ref finance"
+            title="success rate on Ref finance"
             baseSpan={3}
-            barDataKey="Unique Swpper"
-            lineDataKey="AVG Unique Swpper"
+            barDataKey="Success rate"
+            lineDataKey="AVG Success rate"
             xAxisDataKey="Day"
           />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[5]}
+            data={successAndFailRateOnRef}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/5a857256-6887-46b8-a5f8-aa23cf8b88a8"
+            tooltipTitle=""
+            modelInfo=""
+            title="failed rate on Ref finance"
+            baseSpan={3}
+            barDataKey="Failed rate"
+            lineDataKey="AVG Failed rate"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={transactionFeeGenerated}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/165d1ede-d5dc-46c1-9542-0dd8a8999bf7"
+            tooltipTitle=""
+            modelInfo=""
+            title="Transactions fee spent on Ref finance"
+            baseSpan={3}
+            barDataKey="Fee"
+            lineDataKey="Avg Fee"
+            xAxisDataKey="Day"
+          />
+
           <CalendarChart
             data={numberOfSwapAndSwapperOnRefFi}
             queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
@@ -256,80 +273,60 @@ const Governance = ({
             lineDataKey="AVG TX Count"
             xAxisDataKey="Day"
           />
+
+          <CalendarChart
+            data={numberOfSwapAndSwapperOnRefFi}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
+            tooltipTitle=""
+            modelInfo=""
+            title="Number of unique swapper on Ref finance"
+            baseSpan={3}
+            areaDataKey="Unique Swpper"
+            xAxisDataKey="Day"
+          />
           <LineChartWithBar
             customColor={colors[1]}
             barColor={colors[3]}
-            data={transactionFeeGenerated}
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/165d1ede-d5dc-46c1-9542-0dd8a8999bf7"
+            data={numberOfSwapAndSwapperOnRefFi}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
             tooltipTitle=""
             modelInfo=""
-            title="Transactions fee spent on Ref finance"
+            title="Number of unique swapper on Ref finance"
             baseSpan={3}
-            barDataKey="Fee"
-            lineDataKey="Avg Fee"
-            xAxisDataKey="Day"
-          />
-
-          <LineChartWithBar
-            customColor={colors[1]}
-            barColor={colors[3]}
-            data={dailyNewWalletOnRef}
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/f0186fc1-92ff-44bb-b70f-122c6ecf5117"
-            tooltipTitle=""
-            modelInfo=""
-            title="New Wallets on Ref finance"
-            baseSpan={3}
-            barDataKey="New Wallets"
-            lineDataKey="Avg New Wallets"
-            xAxisDataKey="Day"
-          />
-
-          <LineChartWithBar
-            customColor={colors[1]}
-            barColor={colors[5]}
-            data={successAndFailRateOnRef}
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/5a857256-6887-46b8-a5f8-aa23cf8b88a8"
-            tooltipTitle=""
-            modelInfo=""
-            title="failed rate on Ref finance"
-            baseSpan={3}
-            barDataKey="Failed rate"
-            lineDataKey="AVG Failed rate"
+            barDataKey="Unique Swpper"
+            lineDataKey="AVG Unique Swpper"
             xAxisDataKey="Day"
           />
 
           <LineChartWithBar
             customColor={colors[1]}
             barColor={colors[3]}
-            data={successAndFailRateOnRef}
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/5a857256-6887-46b8-a5f8-aa23cf8b88a8"
+            data={refSwappedVolumeIn2022}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/e5f735b1-ae92-4d83-9ce7-c4527600dbe0"
             tooltipTitle=""
             modelInfo=""
-            title="success rate on Ref finance"
+            title="Volume of Swaps on Ref finance since 2022"
             baseSpan={3}
-            barDataKey="Success rate"
-            lineDataKey="AVG Success rate"
+            barDataKey="Volume USD"
+            lineDataKey="AVG Volume USD"
             xAxisDataKey="Day"
           />
 
-          <BarGraph
-            isNotDate
-            isSeprate
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/1b716381-9b2b-461a-b984-c9e26398554e"
-            extraInfoToTooltip=""
+          <FlowChart
+            data={finalSwapFromStablecoinsToOthers}
             modelInfo=""
-            values={mostPopularTokenSwapVolume.volumeInfo}
-            title="Most popular token for swapping based on volume on Ref finance"
-            dataKey="Name"
-            oyLabel="Volume is USD"
-            oxLabel="Day"
+            title="which tokens are most swapped from Stablecoins in Ref finance?"
+            tooltipTitle=""
             baseSpan={3}
-            labels={mostPopularTokenSwapVolume.actions.map(
-              (type: string, index: number) => ({
-                color: colors[index],
-                key: type,
-              })
-            )}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/9483c686-f6d4-469c-9d68-f0bcbb411f8e"
+          />
+          <FlowChart
+            data={finalSwapToStablecoinsToOthers}
+            modelInfo=""
+            title="which tokens are most swapped to Stablecoins in Ref finance?"
+            tooltipTitle=""
+            baseSpan={3}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/e2441a8e-19e1-4ebf-aca7-961e1e3023cd"
           />
 
           <BarGraph
@@ -345,6 +342,26 @@ const Governance = ({
             oxLabel="Day"
             baseSpan={3}
             labels={mostPopularTokenSwapCount.actions.map(
+              (type: string, index: number) => ({
+                color: colors[index],
+                key: type,
+              })
+            )}
+          />
+
+          <BarGraph
+            isNotDate
+            isSeprate
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/1b716381-9b2b-461a-b984-c9e26398554e"
+            extraInfoToTooltip=""
+            modelInfo=""
+            values={mostPopularTokenSwapVolume.volumeInfo}
+            title="Most popular token for swapping based on volume on Ref finance"
+            dataKey="Name"
+            oyLabel="Volume is USD"
+            oxLabel="Day"
+            baseSpan={3}
+            labels={mostPopularTokenSwapVolume.actions.map(
               (type: string, index: number) => ({
                 color: colors[index],
                 key: type,

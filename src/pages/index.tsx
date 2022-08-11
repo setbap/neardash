@@ -9,6 +9,7 @@ import {
   getRefSwappedVolumeIn2022,
   getSuccessAndFailRateOnRef,
   getSwapFromStablecoinsToOthers,
+  getSwapToStablecoinsToOthers,
   getTop100UsedContracts,
   getTransactionFeeGenerated,
 } from "lib/requests/dapps";
@@ -25,6 +26,7 @@ export async function getStaticProps() {
     mostPopularTokenSwapCount,
     refSwappedVolumeIn2022,
     swapFromStablecoinsToOthers,
+    swapToStablecoinsToOthers,
   ] = await Promise.all([
     // statics
 
@@ -39,6 +41,7 @@ export async function getStaticProps() {
     getMostPopularTokenSwapCount(),
     getRefSwappedVolumeIn2022(),
     getSwapFromStablecoinsToOthers(),
+    getSwapToStablecoinsToOthers(),
   ]);
   return {
     props: {
@@ -53,6 +56,7 @@ export async function getStaticProps() {
       mostPopularTokenSwapCount,
       refSwappedVolumeIn2022,
       swapFromStablecoinsToOthers,
+      swapToStablecoinsToOthers,
     },
     revalidate: 10 * 60,
   };

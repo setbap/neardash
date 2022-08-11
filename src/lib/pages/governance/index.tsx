@@ -231,19 +231,6 @@ Props) => {
             nameKey="Validator"
           />
 
-          {/* <LineChartWithBar
-            customColor="#8247e5"
-            barColor="#5effff60"
-            data={tokenInfoData}
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/40f643c5-5d22-4395-bad6-c3969074e794"
-            tooltipTitle="Price VS Circulating Supply"
-            modelInfo="Price VS Circulating Supply"
-            title="Price VS Circulating Supply"
-            baseSpan={3}
-            barDataKey="Curculating Supply"
-            lineDataKey="Matic Price"
-            xAxisDataKey="Day"
-          /> */}
           <DonutChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937"
             data={[
@@ -307,7 +294,7 @@ Props) => {
 
           <StackedAreaChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937"
-            modelInfo="number of address make tx in Near"
+            modelInfo=""
             values={dailyStackingInfo.dailyStackActionsCount}
             title="Daily Staking and unStaking Transaction Count"
             dataKey="date"
@@ -327,7 +314,7 @@ Props) => {
           />
           <StackedAreaChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/fc40ed57-d4a5-49a4-a80b-bbe861151937"
-            modelInfo="number of address make tx in Near"
+            modelInfo=""
             values={dailyStackingInfo.dailyStackActionsComulativeCount}
             title="Daily Cumulative Staking and unStaking Transaction Count"
             dataKey="date"
@@ -348,7 +335,7 @@ Props) => {
 
           <StackedAreaChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/4505b5f7-09d9-4d86-8b8b-8458a9870e62"
-            modelInfo="number of address make tx in Near"
+            modelInfo=""
             values={dailyStackingVolumeInfo}
             title="Daily Staking and unStaking Near Volume"
             dataKey="Day"
@@ -388,7 +375,7 @@ Props) => {
           />
           <StackedAreaChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/2d7631b4-6846-46a6-9b63-cbe60562eab9"
-            modelInfo="number of address make tx in Near"
+            modelInfo=""
             values={dailyUniqueStackerInfo.dailyStackActionsUsers}
             title="Daily Staking and unStaking Unique User"
             dataKey="date"
@@ -408,7 +395,7 @@ Props) => {
           />
           <StackedAreaChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/2d7631b4-6846-46a6-9b63-cbe60562eab9"
-            modelInfo="number of address make tx in Near"
+            modelInfo=""
             values={dailyUniqueStackerInfo.dailyStackActionsComulativeUsers}
             title="Daily Staking and unStaking Cumulative Unique User"
             dataKey="date"

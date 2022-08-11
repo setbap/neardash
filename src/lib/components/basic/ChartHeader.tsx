@@ -4,7 +4,6 @@ import {
   chakra,
   Menu,
   MenuButton,
-  MenuList,
   Modal,
   ModalContent,
   ModalHeader,
@@ -14,14 +13,9 @@ import {
   Button,
   ModalOverlay,
   useDisclosure,
-  Popover,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverTrigger,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { AiOutlineInfoCircle, AiOutlineExpand } from "react-icons/ai";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FiSettings } from "react-icons/fi";
 import ReactMarkdown from "react-markdown";
 
@@ -52,7 +46,6 @@ export default function ChartHeader({
       alignItems="center"
       justifyContent={"space-between"}
     >
-      <Box></Box>
       {!(modalInfo === "" || modalInfo === null) && (
         <IconButton
           size={"sm"}
@@ -82,13 +75,15 @@ export default function ChartHeader({
         />
         {chartMenu}
       </Menu>
-      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+      <Modal size={"xl"} isCentered isOpen={isOpen} onClose={onClose}>
         {overlay}
         <ModalContent bg={"#232323"}>
-          <ModalHeader>Info</ModalHeader>
+          <ModalHeader>Chart Information</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <ReactMarkdown>{modalInfo}</ReactMarkdown>
+            <Box px={4}>
+              <ReactMarkdown>{modalInfo}</ReactMarkdown>
+            </Box>
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close</Button>

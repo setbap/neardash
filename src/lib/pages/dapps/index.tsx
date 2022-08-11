@@ -172,7 +172,8 @@ const Governance = ({
             queryLink="https://app.flipsidecrypto.com/velocity/queries/5ac84025-7ca8-4b79-93c6-26280322a2d3"
             data={mostPopularActionOnRef}
             tooltipTitle=""
-            modelInfo=""
+            modelInfo="This chart shows the most popular action by users on Ref finance.
+As you can see, users use swapping more than other actions. So in the following charts, I focus on this action."
             title="Most popular actions based on TX Count on Ref finance "
             nameKey="Action"
             dataKey="TX count"
@@ -192,7 +193,16 @@ const Governance = ({
 
           <BarGraph
             queryLink="https://app.flipsidecrypto.com/velocity/queries/3315b247-9f09-43c2-8533-f7dcf0f45722"
-            modelInfo=""
+            modelInfo={`
+This chart shows the top 100 Contracts/Platforms that interacted on Near.
+Here I explain about the top three platforms and their usage:
+
+1. NEAR Crowd: The main idea behind NEAR Crowd is to facilitate a decentralized environment where users receive rewards for completing small jobs requested by other users.
+
+2. Learn NEAR CLUB: This course is an opportunity for web developers to earn a Certificate of Completion that represents the ability to design, develop, test and deploy smart contracts on the NEAR platform.
+
+3. Ref Finance: This is a community-led, multi-purpose DeFi platform built on NEAR Protocol. Ref Finance takes full advantage of Near's low fees, one-to-two second finality, and WebAssembly-based runtime (hello, Rust smart contracts!).
+            `}
             values={top100UsedContracts}
             title="Top 100 Contracts/Platforms interacted on Near"
             dataKey="Name"
@@ -212,7 +222,6 @@ const Governance = ({
             data={numberOfTXAndUserOnRefFi}
             queryLink="https://app.flipsidecrypto.com/velocity/queries/4a3c1109-69ce-4502-b3ad-ca4af1022855"
             tooltipTitle=""
-            modelInfo=""
             title="Number of transactions on Ref finance"
             baseSpan={3}
             areaDataKey="TX Count"
@@ -237,7 +246,6 @@ const Governance = ({
             data={numberOfTXAndUserOnRefFi}
             queryLink="https://app.flipsidecrypto.com/velocity/queries/4a3c1109-69ce-4502-b3ad-ca4af1022855"
             tooltipTitle=""
-            modelInfo=""
             title="Number of unique users on Ref finance"
             baseSpan={3}
             areaDataKey="Unique Users"
@@ -317,7 +325,6 @@ const Governance = ({
             data={numberOfSwapAndSwapperOnRefFi}
             queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
             tooltipTitle=""
-            modelInfo=""
             title="Number of Swap transactions on Ref finance"
             baseSpan={3}
             areaDataKey="TX Count"
@@ -342,7 +349,6 @@ const Governance = ({
             data={numberOfSwapAndSwapperOnRefFi}
             queryLink="https://app.flipsidecrypto.com/velocity/queries/9f832aea-5120-4f40-a992-52c408d08694"
             tooltipTitle=""
-            modelInfo=""
             title="Number of unique swapper on Ref finance"
             baseSpan={3}
             areaDataKey="Unique Swpper"
@@ -379,15 +385,18 @@ const Governance = ({
           <FlowChart
             data={finalSwapFromStablecoinsToOthers}
             modelInfo=""
-            title="which tokens are most swapped from Stablecoins in Ref finance?"
-            tooltipTitle=""
+            title="Swap from Stablecoins to Others"
+            tooltipTitle="This chart shows the flow between stablecoins and top tokens based on volume in Ref finance. 
+As you can see, The stablecoins swapped to NEAR more than others."
             baseSpan={3}
             queryLink="https://app.flipsidecrypto.com/velocity/queries/9483c686-f6d4-469c-9d68-f0bcbb411f8e"
           />
           <FlowChart
             data={finalSwapToStablecoinsToOthers}
-            modelInfo=""
-            title="which tokens are most swapped to Stablecoins in Ref finance?"
+            modelInfo="
+This chart shows the flow between stablecoins and top tokens based on volume in Ref finance. 
+As you can see, The stablecoins swapped to NEAR more than others."
+            title="Swap to Stablecoins from Others"
             tooltipTitle=""
             baseSpan={3}
             queryLink="https://app.flipsidecrypto.com/velocity/queries/e2441a8e-19e1-4ebf-aca7-961e1e3023cd"

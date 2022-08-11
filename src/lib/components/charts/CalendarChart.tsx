@@ -25,7 +25,7 @@ import LinkToSourceMenuItem from "../basic/LinkToSourceMenuItem";
 import TrendLine from "./TrendLine";
 
 interface Props {
-  modelInfo: string;
+  modelInfo?: string;
   xAxisDataKey: string;
   areaDataKey: string;
   title: string;
@@ -57,7 +57,7 @@ const CalendarChart = ({
   xAxisDataKey,
   data,
   title,
-  modelInfo,
+  modelInfo = "This chart shows the Congestion of the network each day. Light colors indicate low numbers and dark colors indicate high numbers that day.",
   additionalDumpTextToAddKeyToKeyBeUnique = "",
   defultSelectedRange = "all",
   customColor = "var(--chakra-colors-green-300)",

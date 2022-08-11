@@ -6,6 +6,7 @@ import {
   getMostPopularTokenSwapCount,
   getMostPopularTokenSwapVolume,
   getNumberOfSwapAndSwapperOnRefFi,
+  getNumberOfTXAndUserOnRefFi,
   getRefSwappedVolumeIn2022,
   getSuccessAndFailRateOnRef,
   getSwapFromStablecoinsToOthers,
@@ -27,6 +28,7 @@ export async function getStaticProps() {
     refSwappedVolumeIn2022,
     swapFromStablecoinsToOthers,
     swapToStablecoinsToOthers,
+    numberOfTXAndUserOnRefFi,
   ] = await Promise.all([
     // statics
 
@@ -42,6 +44,7 @@ export async function getStaticProps() {
     getRefSwappedVolumeIn2022(),
     getSwapFromStablecoinsToOthers(),
     getSwapToStablecoinsToOthers(),
+    getNumberOfTXAndUserOnRefFi(),
   ]);
   return {
     props: {
@@ -57,6 +60,7 @@ export async function getStaticProps() {
       refSwappedVolumeIn2022,
       swapFromStablecoinsToOthers,
       swapToStablecoinsToOthers,
+      numberOfTXAndUserOnRefFi,
     },
     revalidate: 10 * 60,
   };

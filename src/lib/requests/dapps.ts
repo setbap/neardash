@@ -6,6 +6,7 @@ import {
   IMostPoularTokenSwapCountOnRef,
   IMostPoularTokenSwapVolumeOnRef,
   INumberOfSwapAndSwapperOnRefFi,
+  INumberOfTXAndUserOnRefFi,
   IRefSwappedVolumeIn2022,
   ISankeyChartBase,
   IStablecoinSwap,
@@ -52,6 +53,18 @@ export const getNumberOfSwapAndSwapperOnRefFi: () => Promise<
     "https://node-api.flipsidecrypto.com/api/v2/queries/9f832aea-5120-4f40-a992-52c408d08694/data/latest"
   );
   const fetchedData: INumberOfSwapAndSwapperOnRefFi[] = await res.json();
+  return fetchedData.sort((a, b) =>
+    moment(a.Day).isAfter(moment(b.Day)) ? 1 : -1
+  );
+};
+
+export const getNumberOfTXAndUserOnRefFi: () => Promise<
+  INumberOfTXAndUserOnRefFi[]
+> = async () => {
+  const res = await fetch(
+    "https://node-api.flipsidecrypto.com/api/v2/queries/4a3c1109-69ce-4502-b3ad-ca4af1022855/data/latest"
+  );
+  const fetchedData: INumberOfTXAndUserOnRefFi[] = await res.json();
   return fetchedData.sort((a, b) =>
     moment(a.Day).isAfter(moment(b.Day)) ? 1 : -1
   );

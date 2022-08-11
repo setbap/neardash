@@ -6,6 +6,14 @@ export interface INumberOfSwapAndSwapperOnRefFi {
   "AVG Unique Swpper": number;
 }
 
+export interface INumberOfTXAndUserOnRefFi {
+  Day: string;
+  "TX Count": number;
+  "Unique Users": number;
+  "AVG TX Count": number;
+  "AVG Unique Users": number;
+}
+
 export interface IDappsAndUSNAmount {
   Contract: string;
   "USN amount": number;

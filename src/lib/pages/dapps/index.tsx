@@ -8,6 +8,7 @@ import {
   IDappsAndUSNAmount,
   IMostPopularActionOnRef,
   INumberOfSwapAndSwapperOnRefFi,
+  INumberOfTXAndUserOnRefFi,
   IRefSwappedVolumeIn2022,
   ISankeyChart,
   ISankeyChartBase,
@@ -63,6 +64,7 @@ interface Props {
   successAndFailRateOnRef: ISuccessAndFailRateOnRef[];
   swapFromStablecoinsToOthers: ISankeyChartBase;
   swapToStablecoinsToOthers: ISankeyChartBase;
+  numberOfTXAndUserOnRefFi: INumberOfTXAndUserOnRefFi[];
   mostPopularTokenSwapVolume: any;
   mostPopularTokenSwapCount: any;
 }
@@ -71,6 +73,7 @@ const Governance = ({
   top100UsedContracts,
   mostPopularActionOnRef,
   numberOfSwapAndSwapperOnRefFi,
+  numberOfTXAndUserOnRefFi,
   refSwappedVolumeIn2022,
   mostDappsAndContractWithMostUSDTUSNUSDC,
   transactionFeeGenerated,
@@ -203,6 +206,55 @@ const Governance = ({
                 color: colors[0],
               },
             ]}
+          />
+
+          <CalendarChart
+            data={numberOfTXAndUserOnRefFi}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/4a3c1109-69ce-4502-b3ad-ca4af1022855"
+            tooltipTitle=""
+            modelInfo=""
+            title="Number of transactions on Ref finance"
+            baseSpan={3}
+            areaDataKey="TX Count"
+            xAxisDataKey="Day"
+          />
+
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={numberOfTXAndUserOnRefFi}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/4a3c1109-69ce-4502-b3ad-ca4af1022855"
+            tooltipTitle=""
+            modelInfo=""
+            title="Number of transactions on Ref finance"
+            baseSpan={3}
+            barDataKey="TX Count"
+            lineDataKey="AVG TX Count"
+            xAxisDataKey="Day"
+          />
+
+          <CalendarChart
+            data={numberOfTXAndUserOnRefFi}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/4a3c1109-69ce-4502-b3ad-ca4af1022855"
+            tooltipTitle=""
+            modelInfo=""
+            title="Number of unique users on Ref finance"
+            baseSpan={3}
+            areaDataKey="Unique Users"
+            xAxisDataKey="Day"
+          />
+          <LineChartWithBar
+            customColor={colors[1]}
+            barColor={colors[3]}
+            data={numberOfTXAndUserOnRefFi}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/4a3c1109-69ce-4502-b3ad-ca4af1022855"
+            tooltipTitle=""
+            modelInfo=""
+            title="Number of unique users on Ref finance"
+            baseSpan={3}
+            barDataKey="Unique Users"
+            lineDataKey="AVG Unique Users"
+            xAxisDataKey="Day"
           />
 
           <LineChartWithBar

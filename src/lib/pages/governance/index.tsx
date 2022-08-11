@@ -60,7 +60,12 @@ Props) => {
           url: "https://NearDash.vercel.app/",
           title: "NearDash | Business Intelligence Dashboard for Near",
           description: "Track the latest stats and trends on Near",
-
+          images: [
+            {
+              url: "https://neardash.vercel.app/og.png",
+              alt: "NearDash by Flipside Crypto and Setbap",
+            },
+          ],
           site_name: "NearDash",
         }}
         twitter={{

@@ -2,8 +2,7 @@
 const defaultSEOConfig = {
   title: "NearDash",
   titleTemplate: "%s | Business Intelligence Dashboard for Near",
-  defaultTitle:
-    "NearDash | Business Intelligence Dashboard for Near ",
+  defaultTitle: "NearDash | Business Intelligence Dashboard for Near ",
   description:
     "Best Business Intelligence Dashboard for Near by Flipside Crypto and Setbap ",
   canonical: "https://NearDash.vercel.app/",
@@ -14,7 +13,7 @@ const defaultSEOConfig = {
       "Best Business Intelligence Dashboard for Near by Flipside Crypto and Setbap ",
     images: [
       {
-        url: "https://og-image.sznm.dev/**NearDash**.vercel.app.png?theme=dark&md=1&fontSize=125px",
+        url: "https://neardash.vercel.app/og.png",
         alt: "NearDash by Flipside Crypto and Setbap",
       },
     ],

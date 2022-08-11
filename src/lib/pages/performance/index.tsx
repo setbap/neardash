@@ -54,13 +54,18 @@ const Governance = ({
   return (
     <>
       <NextSeo
-        title="NearDash | Business Intelligence Dashboard for Near"
+        title="NearDash (Performance) | Business Intelligence Dashboard for Near"
         description="Track the latest stats and trends on Near"
         openGraph={{
           url: "https://NearDash.vercel.app/",
           title: "NearDash | Business Intelligence Dashboard for Near",
           description: "Track the latest stats and trends on Near",
-
+          images: [
+            {
+              url: "https://neardash.vercel.app/og.png",
+              alt: "NearDash by Flipside Crypto and Setbap",
+            },
+          ],
           site_name: "NearDash",
         }}
         twitter={{

@@ -38,7 +38,7 @@ This dashboard is made with love by members of the Near community, in partnershi
     
   
 
-Last Updated: __Aug 3, 2022__
+Last Updated: __Aug 11, 2022__
 `}
           </MDRenderer>
         </Box>

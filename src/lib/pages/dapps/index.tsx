@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, GridItem, Heading, Link, SimpleGrid } from "@chakra-ui/react";
 import BarGraph from "lib/components/charts/BarGraph";
 import DonutChart from "lib/components/charts/DonutChart";
 import LineChartWithBar from "lib/components/charts/LineChartWithBar";
@@ -19,6 +19,7 @@ import {
 
 import { NextSeo } from "next-seo";
 import dynamic from "next/dynamic";
+import { FiExternalLink } from "react-icons/fi";
 
 const CalendarChart: any = dynamic(
   () => import("../../components/charts/CalendarChart"),
@@ -48,6 +49,25 @@ const colors = [
   "#009688",
   "#607d8b",
 ];
+const RefFiHeader = () => {
+  return (
+    <Heading as="h2">
+      Selected Dapps :{" "}
+      <Box as="span" fontWeight={"light"} display={"inline"} color={"#0a8"}>
+        <Link
+          href="https://www.ref.finance/"
+          isExternal
+          display={"inline-flex"}
+        >
+          Ref.finance
+          <Box ps={"1"}>
+            <FiExternalLink size={20} />
+          </Box>
+        </Link>
+      </Box>
+    </Heading>
+  );
+};
 
 interface Props {
   top100UsedContracts: ITop100UsedContracts[];
@@ -222,6 +242,19 @@ Here I explain about the top three platforms and their usage:
               },
             ]}
           />
+
+          <GridItem
+            bgColor={"#191919"}
+            shadow="base"
+            p={"6"}
+            colSpan={3}
+            transition={"all 0.5s "}
+            w="full"
+            _hover={{ boxShadow: "var(--chakra-shadows-lg)" }}
+            borderRadius={"2xl"}
+          >
+            <RefFiHeader />
+          </GridItem>
 
           <CalendarChart
             data={numberOfTXAndUserOnRefFi}

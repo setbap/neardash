@@ -7,6 +7,8 @@ import {
   IMostPoularTokenSwapVolumeOnRef,
   INumberOfSwapAndSwapperOnRefFi,
   IRefSwappedVolumeIn2022,
+  ISankeyChartBase,
+  IStablecoinSwap,
   ISuccessAndFailRateOnRef,
   ITop100UsedContracts,
   ITransactionFeeGenerated,
@@ -112,6 +114,27 @@ export const getRefSwappedVolumeIn2022: () => Promise<
     moment(a.Day).isAfter(moment(b.Day)) ? 1 : -1
   );
 };
+
+export const getSwapFromStablecoinsToOthers: () => Promise<ISankeyChartBase> =
+  async () => {
+    const res = await fetch(
+      "https://node-api.flipsidecrypto.com/api/v2/queries/9483c686-f6d4-469c-9d68-f0bcbb411f8e/data/latest"
+    );
+    const fetchedData: IStablecoinSwap[] = await res.json();
+    const fromCoins = fetchedData.map((item) => item["Swap from"]);
+    const toCoins = fetchedData.map((item) => item["Swap to"] + " ");
+    const nodesSet = new Set(fromCoins.concat(toCoins));
+    const nodes = Array.from(nodesSet);
+    const links = fetchedData.map((item) => ({
+      source: item["Swap from"],
+      target: item["Swap to"] + " ",
+      value: item["Volume USD"],
+    }));
+    return {
+      nodes,
+      links,
+    };
+  };
 
 export const getMostPopularTokenSwapVolume: () => Promise<any> = async () => {
   const res = await fetch(

@@ -1,6 +1,5 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import BarGraph from "lib/components/charts/BarGraph";
-import MyCalendarChart from "lib/components/charts/CalendarChart";
 import DonutChart from "lib/components/charts/DonutChart";
 import LineChartWithBar from "lib/components/charts/LineChartWithBar";
 import { StatsCard } from "lib/components/charts/StateCard";
@@ -10,6 +9,8 @@ import {
   IMostPopularActionOnRef,
   INumberOfSwapAndSwapperOnRefFi,
   IRefSwappedVolumeIn2022,
+  ISankeyChart,
+  ISankeyChartBase,
   ISuccessAndFailRateOnRef,
   ITop100UsedContracts,
   ITransactionFeeGenerated,
@@ -20,6 +21,13 @@ import dynamic from "next/dynamic";
 
 const CalendarChart: any = dynamic(
   () => import("../../components/charts/CalendarChart"),
+  {
+    ssr: false,
+  }
+);
+
+const FlowChart: any = dynamic(
+  () => import("../../components/charts/FlowChart"),
   {
     ssr: false,
   }
@@ -53,9 +61,9 @@ interface Props {
   transactionFeeGenerated: ITransactionFeeGenerated[];
   dailyNewWalletOnRef: IDailyNewWalletOnRef[];
   successAndFailRateOnRef: ISuccessAndFailRateOnRef[];
+  swapFromStablecoinsToOthers: ISankeyChartBase;
   mostPopularTokenSwapVolume: any;
   mostPopularTokenSwapCount: any;
-  dailyMostPopularTokenSwapVolume: any;
 }
 
 const Governance = ({
@@ -69,7 +77,7 @@ const Governance = ({
   successAndFailRateOnRef,
   mostPopularTokenSwapVolume,
   mostPopularTokenSwapCount,
-  dailyMostPopularTokenSwapVolume,
+  swapFromStablecoinsToOthers,
 }: Props): JSX.Element => {
   const volumeInLastDay =
     refSwappedVolumeIn2022[refSwappedVolumeIn2022.length - 1][
@@ -80,6 +88,12 @@ const Governance = ({
       "Total Volume USD"
     ];
   const hasVolumeGroth = volumeInLastDay > volumeInDayBeforeLastDay;
+  const sankeyChartData: ISankeyChart = {
+    links: swapFromStablecoinsToOthers.links,
+    nodes: swapFromStablecoinsToOthers.nodes.map(
+      (node: string, index: number) => ({ color: colors[index], id: node })
+    ),
+  };
   return (
     <>
       <NextSeo
@@ -118,6 +132,32 @@ const Governance = ({
           columns={{ sm: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 1, md: 2, lg: 4 }}
         >
+          <BarGraph
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/3315b247-9f09-43c2-8533-f7dcf0f45722"
+            modelInfo=""
+            values={top100UsedContracts}
+            title="Top 100 Contracts/Platforms interacted on Near"
+            dataKey="Name"
+            baseSpan={3}
+            isNotDate
+            oyLabel="Number of TXs"
+            oxLabel="Dapps Name"
+            labels={[
+              {
+                key: "Counts",
+                color: colors[0],
+              },
+            ]}
+          />
+          <FlowChart
+            data={sankeyChartData}
+            modelInfo=""
+            title="Swap from Stablecoins to Others"
+            tooltipTitle=""
+            baseSpan={3}
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/9483c686-f6d4-469c-9d68-f0bcbb411f8e"
+          />
+
           <DonutChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/6fa15eba-c264-4b97-8557-f1cf103f801e"
             data={mostDappsAndContractWithMostUSDTUSNUSDC.usn}
@@ -151,26 +191,9 @@ const Governance = ({
             data={mostPopularActionOnRef}
             tooltipTitle=""
             modelInfo=""
-            title="Most popular action on Ref finance"
+            title="Most popular actions based on TX Count on Ref finance "
             nameKey="Action"
             dataKey="TX count"
-          />
-          <BarGraph
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/3315b247-9f09-43c2-8533-f7dcf0f45722"
-            modelInfo=""
-            values={top100UsedContracts}
-            title="Top 100 Contracts/Platforms who interacted on Near"
-            dataKey="Name"
-            baseSpan={3}
-            isNotDate
-            oyLabel="Number of TXs"
-            oxLabel="Dapps Name"
-            labels={[
-              {
-                key: "Counts",
-                color: colors[0],
-              },
-            ]}
           />
 
           <LineChartWithBar
@@ -254,7 +277,7 @@ const Governance = ({
             queryLink="https://app.flipsidecrypto.com/velocity/queries/f0186fc1-92ff-44bb-b70f-122c6ecf5117"
             tooltipTitle=""
             modelInfo=""
-            title="Daily New Wallets on Ref finance"
+            title="New Wallets on Ref finance"
             baseSpan={3}
             barDataKey="New Wallets"
             lineDataKey="Avg New Wallets"
@@ -268,7 +291,7 @@ const Governance = ({
             queryLink="https://app.flipsidecrypto.com/velocity/queries/5a857256-6887-46b8-a5f8-aa23cf8b88a8"
             tooltipTitle=""
             modelInfo=""
-            title="Daily failed rate on Ref finance"
+            title="failed rate on Ref finance"
             baseSpan={3}
             barDataKey="Failed rate"
             lineDataKey="AVG Failed rate"
@@ -282,7 +305,7 @@ const Governance = ({
             queryLink="https://app.flipsidecrypto.com/velocity/queries/5a857256-6887-46b8-a5f8-aa23cf8b88a8"
             tooltipTitle=""
             modelInfo=""
-            title="Daily success rate on Ref finance"
+            title="success rate on Ref finance"
             baseSpan={3}
             barDataKey="Success rate"
             lineDataKey="AVG Success rate"
@@ -322,25 +345,6 @@ const Governance = ({
             oxLabel="Day"
             baseSpan={3}
             labels={mostPopularTokenSwapCount.actions.map(
-              (type: string, index: number) => ({
-                color: colors[index],
-                key: type,
-              })
-            )}
-          />
-
-          <BarGraph
-            isSeprate
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/9e262b6b-e479-4834-85bb-89291555b531"
-            extraInfoToTooltip=""
-            modelInfo=""
-            values={dailyMostPopularTokenSwapVolume.volumeInfo}
-            title="Volume of Swapped from and to on Ref finance"
-            dataKey="Name"
-            oyLabel="Volume is USD"
-            oxLabel="Day"
-            baseSpan={3}
-            labels={dailyMostPopularTokenSwapVolume.actions.map(
               (type: string, index: number) => ({
                 color: colors[index],
                 key: type,

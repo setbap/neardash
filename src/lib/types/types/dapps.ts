@@ -71,3 +71,31 @@ export interface IRefSwappedVolumeIn2022 {
   "AVG Volume USD": number;
   "Total Volume USD": number;
 }
+
+export interface IStablecoinSwap {
+  "Swap from": string;
+  "Swap to": string;
+  "Volume USD": number;
+  rank: number;
+}
+
+export interface ISankeyChartBase {
+  nodes: string[];
+  links: {
+    source: string;
+    target: string;
+    value: number;
+  }[];
+}
+
+export interface ISankeyChart {
+  nodes: {
+    id: string;
+    color: string;
+  }[];
+  links: {
+    source: string;
+    target: string;
+    value: number;
+  }[];
+}

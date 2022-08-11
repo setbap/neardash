@@ -151,7 +151,7 @@ const BarGraph = ({
         <ChartHeader
           disclaimer={disclaimer}
           chartMenu={
-            <MenuList>
+            <MenuList bg="#232323">
               {queryLink && (
                 <>
                   <LinkToSourceMenuItem queryLink={queryLink} />

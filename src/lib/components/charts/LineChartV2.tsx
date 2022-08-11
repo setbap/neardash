@@ -60,14 +60,16 @@ const LineChartV2 = ({
   title,
   modelInfo,
   defultSelectedRange = "all",
-  showMonthly = true
+  showMonthly = true,
 }: Props) => {
   const [spanItem, setSpanItem] = useState(GRID_ITEM_SIZE[baseSpan - 1]);
   const [defultViewSetting, setDefultViewSetting] = useState(defultDateView);
   const [selectedDate, setSelectedDate] = useState<number | string>(
     defultSelectedRange
   );
-  const [chartData, setChartData] = useState(defultViewSetting === 'day' ? data : monthlyData!);
+  const [chartData, setChartData] = useState(
+    defultViewSetting === "day" ? data : monthlyData!
+  );
   const [savedDailyChart, setSavedDailyChart] = useState(data);
   const filterDateAccordingDay = (numberOfDays: number) => {
     const lastDay = moment(data[data.length - 1][xAxisDataKey]).subtract(
@@ -158,29 +160,33 @@ const LineChartV2 = ({
       >
         <ChartHeader
           chartMenu={
-            <MenuList>
-              {queryLink &&
+            <MenuList bg="#232323">
+              {queryLink && (
                 <>
                   <LinkToSourceMenuItem queryLink={queryLink} />
                   <MenuDivider />
                 </>
-              }
-              {showMonthly && (<><MenuOptionGroup
-                onChange={(value) => {
-                  if (value === "month") {
-                    changeDataToMonethly();
-                  } else {
-                    changeDataToDaily();
-                  }
-                }}
-                defaultValue={defultViewSetting}
-                title="Chart Date Type"
-                type="radio"
-              >
-                <MenuItemOption value={"month"}>monthly</MenuItemOption>
-                <MenuItemOption value={"day"}>daily</MenuItemOption>
-              </MenuOptionGroup>
-                <MenuDivider /></>)}
+              )}
+              {showMonthly && (
+                <>
+                  <MenuOptionGroup
+                    onChange={(value) => {
+                      if (value === "month") {
+                        changeDataToMonethly();
+                      } else {
+                        changeDataToDaily();
+                      }
+                    }}
+                    defaultValue={defultViewSetting}
+                    title="Chart Date Type"
+                    type="radio"
+                  >
+                    <MenuItemOption value={"month"}>monthly</MenuItemOption>
+                    <MenuItemOption value={"day"}>daily</MenuItemOption>
+                  </MenuOptionGroup>
+                  <MenuDivider />
+                </>
+              )}
               <ChartSpanMenu
                 onChange={(span) =>
                   setSpanItem(GRID_ITEM_SIZE[Number(span) - 1])
@@ -303,7 +309,7 @@ const LineChartV2 = ({
                             0,
                             1
                           ).getTime()) /
-                        (1000 * 60 * 60 * 24)
+                          (1000 * 60 * 60 * 24)
                       ) + 1,
                     name: maxDate!.toDate().getFullYear().toString(),
                   },

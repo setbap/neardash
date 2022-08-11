@@ -1,4 +1,5 @@
-import React, { useState } from "react"; import {
+import React, { useState } from "react";
+import {
   AreaChart,
   Bar,
   XAxis,
@@ -10,7 +11,15 @@ import React, { useState } from "react"; import {
   CartesianGrid,
   Area,
 } from "recharts";
-import { Box, useColorModeValue, GridItem, MenuList, MenuDivider, MenuItemOption, MenuOptionGroup } from "@chakra-ui/react";
+import {
+  Box,
+  useColorModeValue,
+  GridItem,
+  MenuList,
+  MenuDivider,
+  MenuItemOption,
+  MenuOptionGroup,
+} from "@chakra-ui/react";
 import millify from "millify";
 import moment from "moment";
 import { GRID_ITEM_SIZE } from "./template";
@@ -29,11 +38,12 @@ const StackedAreaChart = ({
   modelInfo,
   isNotDate = false,
   monthlyValues,
-  extraInfoToTooltip, defualtTime = "day",
+  extraInfoToTooltip,
+  defualtTime = "day",
   queryLink,
   dataPrecision = 2,
 }: {
-  defualtTime?: 'day' | 'month';
+  defualtTime?: "day" | "month";
   title: string;
   dataKey: string;
   oxLabel: string;
@@ -49,8 +59,12 @@ const StackedAreaChart = ({
   labels: { key: string; color: string }[];
 }) => {
   const hasMonthly = !isNotDate && monthlyValues && monthlyValues.length > 0;
-  const [chartData, setChartData] = useState(defualtTime === "day" ? values : monthlyValues);
-  const [chartTimeFrame, setChartTimeFrame] = useState<'day' | 'month'>(defualtTime)
+  const [chartData, setChartData] = useState(
+    defualtTime === "day" ? values : monthlyValues
+  );
+  const [chartTimeFrame, setChartTimeFrame] = useState<"day" | "month">(
+    defualtTime
+  );
   const [spanItem, setSpanItem] = useState(GRID_ITEM_SIZE[baseSpan - 1]);
   const [barProps, setBarProps] = useState(
     labels.reduce(
@@ -77,20 +91,22 @@ const StackedAreaChart = ({
 
   const selectBar = (e: any) => {
     const numberOfBars = Object.keys(barProps).length - 1;
-    const numberOfHideBars = Object.entries(barProps).filter(([key, value]) => value == true).length;
+    const numberOfHideBars = Object.entries(barProps).filter(
+      ([key, value]) => value == true
+    ).length;
 
     if (numberOfBars === numberOfHideBars + 1 && !barProps[e.dataKey]) {
       const newBarProps = { ...barProps };
       // change all keys to true
       Object.keys(newBarProps).forEach((key) => {
-        if (key === 'hover') {
+        if (key === "hover") {
           newBarProps[key] = null;
         } else {
           newBarProps[key] = false;
         }
       });
       setBarProps(newBarProps);
-      return
+      return;
     }
     setBarProps({
       ...barProps,
@@ -100,15 +116,14 @@ const StackedAreaChart = ({
   };
 
   const changeDataToMonethly = () => {
-    setChartTimeFrame('month');
+    setChartTimeFrame("month");
     setChartData(monthlyValues!);
-  }
+  };
 
   const changeDataToDaily = () => {
-    setChartTimeFrame('day');
+    setChartTimeFrame("day");
     setChartData(values);
-  }
-
+  };
 
   return (
     <GridItem
@@ -135,29 +150,33 @@ const StackedAreaChart = ({
       >
         <ChartHeader
           chartMenu={
-            <MenuList>
-              {queryLink &&
+            <MenuList bg="#232323">
+              {queryLink && (
                 <>
                   <LinkToSourceMenuItem queryLink={queryLink} />
                   <MenuDivider />
                 </>
-              }
-              {hasMonthly && (<><MenuOptionGroup
-                onChange={(value) => {
-                  if (value === "month") {
-                    changeDataToMonethly();
-                  } else {
-                    changeDataToDaily();
-                  }
-                }}
-                defaultValue={chartTimeFrame}
-                title="Chart Date Type"
-                type="radio"
-              >
-                <MenuItemOption value={"month"}>monthly</MenuItemOption>
-                <MenuItemOption value={"day"}>daily</MenuItemOption>
-              </MenuOptionGroup>
-                <MenuDivider /></>)}
+              )}
+              {hasMonthly && (
+                <>
+                  <MenuOptionGroup
+                    onChange={(value) => {
+                      if (value === "month") {
+                        changeDataToMonethly();
+                      } else {
+                        changeDataToDaily();
+                      }
+                    }}
+                    defaultValue={chartTimeFrame}
+                    title="Chart Date Type"
+                    type="radio"
+                  >
+                    <MenuItemOption value={"month"}>monthly</MenuItemOption>
+                    <MenuItemOption value={"day"}>daily</MenuItemOption>
+                  </MenuOptionGroup>
+                  <MenuDivider />
+                </>
+              )}
               <ChartSpanMenu
                 onChange={(span) =>
                   setSpanItem(GRID_ITEM_SIZE[Number(span) - 1])
@@ -181,17 +200,17 @@ const StackedAreaChart = ({
               fontSize={"12px"}
               tickFormatter={(value: string) => {
                 if (isNotDate) {
-                  return value
+                  return value;
                 }
-                if (chartTimeFrame === 'month') {
-                  return moment(value).format("MMM YYYY")
+                if (chartTimeFrame === "month") {
+                  return moment(value).format("MMM YYYY");
                 }
-                return moment(value).format("MMM DD YYYY")
+                return moment(value).format("MMM DD YYYY");
               }}
               dataKey={dataKey}
             >
               {/* <Label value={oxLabel} position="center" dy={10} dx={20} /> */}
-            </XAxis >
+            </XAxis>
             <YAxis
               fontSize={"12px"}
               type="number"
@@ -208,7 +227,7 @@ const StackedAreaChart = ({
                 fontSize={"16px"}
                 angle={-90}
                 dy={-20}
-                fill={'gray'}
+                fill={"gray"}
                 style={{
                   color: textColor,
                 }}
@@ -217,29 +236,30 @@ const StackedAreaChart = ({
             </YAxis>
             <Tooltip
               labelFormatter={(value: string) => {
-
                 if (isNotDate) {
-                  return value
+                  return value;
                 }
-                if (chartTimeFrame === 'month') {
-                  return moment(value).format("MMM YYYY")
+                if (chartTimeFrame === "month") {
+                  return moment(value).format("MMM YYYY");
                 }
-                return moment(value).format("MMM DD YYYY")
+                return moment(value).format("MMM DD YYYY");
               }}
               labelStyle={{ color: "white" }}
               contentStyle={{ backgroundColor: "black", borderRadius: "5px" }}
               formatter={(a: any) => {
-                return millify(a, {
-                  precision: dataPrecision,
-                  decimalSeparator: ".",
-                }) + `${extraInfoToTooltip ?? ''}`;
+                return (
+                  millify(a, {
+                    precision: dataPrecision,
+                    decimalSeparator: ".",
+                  }) + `${extraInfoToTooltip ?? ""}`
+                );
               }}
             />
 
             <Legend
               fontSize={"8px"}
-              iconType='circle'
-              style={{ fontSize: "7px", position: 'relative' }}
+              iconType="circle"
+              style={{ fontSize: "7px", position: "relative" }}
               onClick={selectBar}
               onMouseOver={handleLegendMouseEnter}
               onMouseOut={handleLegendMouseLeave}

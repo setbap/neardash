@@ -167,7 +167,7 @@ const DonutChart = ({
         >
           <ChartHeader
             chartMenu={
-              <MenuList>
+              <MenuList bg="#232323">
                 {queryLink && (
                   <>
                     <LinkToSourceMenuItem queryLink={queryLink} />

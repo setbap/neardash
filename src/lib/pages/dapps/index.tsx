@@ -137,24 +137,6 @@ const Governance = ({
           columns={{ sm: 1, md: 1, lg: 2, "2xl": 3 }}
           spacing={{ base: 1, md: 2, lg: 4 }}
         >
-          <BarGraph
-            queryLink="https://app.flipsidecrypto.com/velocity/queries/3315b247-9f09-43c2-8533-f7dcf0f45722"
-            modelInfo=""
-            values={top100UsedContracts}
-            title="Top 100 Contracts/Platforms interacted on Near"
-            dataKey="Name"
-            baseSpan={3}
-            isNotDate
-            oyLabel="Number of TXs"
-            oxLabel="Dapps Name"
-            labels={[
-              {
-                key: "Counts",
-                color: colors[0],
-              },
-            ]}
-          />
-
           <DonutChart
             queryLink="https://app.flipsidecrypto.com/velocity/queries/6fa15eba-c264-4b97-8557-f1cf103f801e"
             data={mostDappsAndContractWithMostUSDTUSNUSDC.usn}
@@ -191,6 +173,36 @@ const Governance = ({
             title="Most popular actions based on TX Count on Ref finance "
             nameKey="Action"
             dataKey="TX count"
+          />
+
+          <DonutChart
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/3315b247-9f09-43c2-8533-f7dcf0f45722"
+            data={[...top100UsedContracts]
+              .sort((a, b) => b.Counts - a.Counts)
+              .slice(0, 10)}
+            tooltipTitle=""
+            modelInfo=""
+            title="Compare Top 10 Contracts/Dapps on Near"
+            nameKey="Name"
+            dataKey="Counts"
+          />
+
+          <BarGraph
+            queryLink="https://app.flipsidecrypto.com/velocity/queries/3315b247-9f09-43c2-8533-f7dcf0f45722"
+            modelInfo=""
+            values={top100UsedContracts}
+            title="Top 100 Contracts/Platforms interacted on Near"
+            dataKey="Name"
+            baseSpan={3}
+            isNotDate
+            oyLabel="Number of TXs"
+            oxLabel="Dapps Name"
+            labels={[
+              {
+                key: "Counts",
+                color: colors[0],
+              },
+            ]}
           />
 
           <LineChartWithBar
